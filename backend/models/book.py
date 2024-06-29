@@ -8,4 +8,4 @@ class booksmodel(Base):
     autor= Column(String(50))
     isbn =Column(String(50))
     editorial =Column(String(50))
-    categoria_id =Column(Integer,ForeignKey())
+    categoria_id =Column(Integer,ForeignKey("category.id"))
