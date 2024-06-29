@@ -3,7 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 
-class loan(BaseModel):
+class loanSchema(BaseModel):
     id:Optional[int]=None
     libro_id:Optional[int]=None
     usuario_id:Optional[int]=None
