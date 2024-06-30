@@ -1,11 +1,16 @@
-from sqlalchemy import Column, Integer, String, DECIMAL,Enum,ForeignKey
-from database import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from app.database import Base
 
-class booksmodel(Base):
-    __tablename__ ="book"
-    id =Column(Integer, primary_key=True,autoincrement=True)
-    titulo =Column(String(50))
-    autor= Column(String(50))
-    isbn =Column(String(50))
-    editorial =Column(String(50))
-    categoria_id =Column(Integer,ForeignKey("category.id"))
+class Libro(Base):
+    __tablename__ = "libros"
+
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String, nullable=False)
+    autor = Column(String, nullable=False)
+    isbn = Column(String, unique=True, nullable=False)
+    editorial = Column(String, nullable=False)
+    categoria_id = Column(Integer, ForeignKey('categorias.id'), nullable=False)
+
+    categoria = relationship("Categoria", back_populates="libros")
+    prestamos = relationship("Prestamo", back_populates="libro")
