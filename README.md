@@ -31,3 +31,50 @@ sistema funcional completo.
 Como base del frontend se puede utilizar el utilizado en la
 materia Laboratorio III, o cualquier otro que prefieran
 siempre que esté basado en HTML, CSS y JS.
+
+## 📂 Estructura del proyecto
+
+Sistema de gestion de libros/
+├── backend/
+│ ├── app/
+│ │ ├── **init**.py
+│ │ ├── main.py
+│ │ ├── api/
+│ │ │ ├── **init**.py
+│ │ │ ├── endpoints/
+│ │ │ │ ├── **init**.py
+│ │ │ │ ├── user.py
+│ │ ├── models/
+│ │ │ ├── **init**.py
+│ │ │ ├── user.py
+│ │ ├── schemas/
+│ │ │ ├── **init**.py
+│ │ │ ├── user.py
+│ │ ├── crud/
+│ │ │ ├── **init**.py
+│ │ │ ├── user.py
+│ │ ├── db/
+│ │ │ ├── **init**.py
+│ │ │ ├── session.py
+│ ├── tests/
+│ ├── alembic/
+│ ├── .env
+│ ├── requirements.txt
+│ ├── Dockerfile
+│ ├── docker-compose.yml
+│ ├── README.md
+├── frontend/
+│ ├── public/
+│ ├── src/
+│ │ ├── assets/
+│ │ ├── components/
+│ │ ├── layouts/
+│ │ ├── pages/
+│ │ │ ├── index.astro
+│ ├── .astro/
+│ ├── package.json
+│ ├── vite.config.js
+│ ├── README.md
+├── .gitignore
+├── LICENSE
+├── README.md
