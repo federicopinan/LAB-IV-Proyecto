@@ -5,34 +5,34 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from starlette.responses import JSONResponse
 from app.database import Session
-from models.category import Categoria
-from services.category import categoryService
-from schemas.category import Categoria
-#from middleware.jwtbearer import JWTBearer
+from models.categoria import Categoria
+from services.categoria import categoryService
+from schemas.categoria import Categoria as CategoriaSchema
+from middlewares.jwt_manager import JWTBearer
 
-category_router = APIRouter()
+categoria_router = APIRouter()
 
-@category_router.get('/category', tags=['category'],response_model=List[Categoria])#,dependencies=[Depends(JWTBearer())])
-def get_Category()-> List[Categoria]:
+@categoria_router.get('/category', tags=['category'],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
+def get_Category()-> List[CategoriaSchema]:
     db = Session()
     result = categoryService(db).get_categories()
     return result
 
-@category_router.get('/category/{id}', tags=['category'])
-def get_Category(id: int) -> Categoria:
+@categoria_router.get('/category/{id}', tags=['category'])
+def get_Category(id: int) -> CategoriaSchema:
     db = Session()
     result = categoryService(db).get_categories(id)
     return result
 
 
-@category_router.post('/category', tags=['category'], response_model=dict, status_code=201)
-def create_category(cat: Categoria) -> dict:
+@categoria_router.post('/category', tags=['category'], response_model=dict, status_code=201)
+def create_category(cat: CategoriaSchema) -> dict:
     db = Session()
     categoryService(db).create_categorie(cat)
     return ({"Mensaje": "Se ha registrado la categoria "+cat.nombre})
 
-@category_router.put('/category/{id}',tags=["category"])
-def update_category(id:int,cat:Categoria):
+@categoria_router.put('/category/{id}',tags=["category"])
+def update_category(id:int,cat:CategoriaSchema):
     db=Session()
     result=categoryService(db).get_categories(id)
     if not result:
@@ -42,7 +42,7 @@ def update_category(id:int,cat:Categoria):
     return {"Mensaje":"Se ha modificado la categoria con el id "+str(id)}
 
 
-@category_router.delete('/category/{id}',tags=["category"])
+@categoria_router.delete('/category/{id}',tags=["category"])
 def delete_category(id: int)-> dict:
     db = Session()
     result: Categoria=db.query(Categoria).filter(Categoria.id == id).first()

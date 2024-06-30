@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from database import engine, Base
-from routers.categoria import category_router
-from routers.libro import book_router
-from routers.prestamo import loan_router
-from routers.usuario import user_router
+from routers.categoria import categoria_router
+from routers.libro import libro_router
+from routers.prestamo import prestamo_router
+from routers.usuario import usuario_router
 
 app = FastAPI()
 

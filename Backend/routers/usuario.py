@@ -5,34 +5,34 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from starlette.responses import JSONResponse
 from app.database import Session
-from models.user import Usuario
-from services.user import userService
-from schemas.user import UsuarioBase,UsuarioCreate,UsuarioUpdate,Usuario
-#from middleware.jwtbearer import JWTBearer
+from models.usuario import Usuario
+from services.usuario import UsuarioServicio
+from schemas.usuario import Usuario as UsuarioSchema
+from middlewares.jwt_manager import JWTBearer
 
-user_router = APIRouter()
+usuario_router = APIRouter()
 
-@user_router.get('/users', tags=['user'],response_model=List[Usuario])#,dependencies=[Depends(JWTBearer())])
-def get_users()-> List[Usuario]:
+@usuario_router.get('/users', tags=['user'],response_model=List[UsuarioSchema])#,dependencies=[Depends(JWTBearer())])
+def get_users()-> List[UsuarioSchema]:
     db = Session()
     result = userService(db).get_users()
     return result
 
-@user_router.get('/users/{id}', tags=['user'])
-def get_user(id: int) -> Usuario:
+@usuario_router.get('/users/{id}', tags=['user'])
+def get_user(id: int) -> UsuarioSchema:
     db = Session()
     result = userService(db).get_users(id)
     return result
 
 
-@user_router.post('/users', tags=['user'], response_model=dict, status_code=201)
-def create_user(user: Usuario) -> dict:
+@usuario_router.post('/users', tags=['user'], response_model=dict, status_code=201)
+def create_user(user: UsuarioSchema) -> dict:
     db = Session()
     userService(db).create_user(user)
     return ({"Mensaje": "Se ha registrado al usuario "+user.nombre})
 
-@user_router.put('/users/{id}',tags=["user"])
-def update_user(id:int,user:Usuario):
+@usuario_router.put('/users/{id}',tags=["user"])
+def update_user(id:int,user:UsuarioSchema):
     db=Session()
     result=userService(db).get_users(id)
     if not result:
@@ -42,7 +42,7 @@ def update_user(id:int,user:Usuario):
     return {"Mensaje":"Se ha modificado al usuario con el id "+str(id)}
 
 
-@user_router.delete('/users/{id}',tags=["user"])
+@usuario_router.delete('/users/{id}',tags=["user"])
 def delete_user(id: int)-> dict:
     db = Session()
     result: Usuario=db.query(Usuario).filter(Usuario.id== id).first()

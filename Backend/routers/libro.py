@@ -5,34 +5,35 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from starlette.responses import JSONResponse
 from app.database import Session
-from models.book import Libro
-from services.book import bookService
-from schemas.book import LibroBase
-#from middleware.jwtbearer import JWTBearer
+from models.libro import Libro
+from services.libro import LibroServicio
+from schemas.libro import Libro as LibroSchema
+from middlewares.jwt_manager import JWTBearer
 
-book_router = APIRouter()
 
-@book_router.get('/book', tags=['book'],response_model=List[LibroBase])#,dependencies=[Depends(JWTBearer())])
-def get_Books()-> List[LibroBase]:
+libro_router = APIRouter()
+
+@libro_router.get('/book', tags=['book'],response_model=List[LibroSchema])#,dependencies=[Depends(JWTBearer())])
+def get_Books()-> List[LibroSchema]:
     db = Session()
     result = bookService(db).get_books()
     return result
 
-@book_router.get('/books/{id}', tags=['book'])
-def get_Book(id: int) -> LibroBase:
+@libro_router.get('/books/{id}', tags=['book'])
+def get_Book(id: int) -> LibroSchema:
     db = Session()
     result = bookService(db).get_books(id)
     return result
 
 
-@book_router.post('/books', tags=['book'], response_model=dict, status_code=201)
-def create_book(libro: LibroBase) -> dict:
+@libro_router.post('/books', tags=['book'], response_model=dict, status_code=201)
+def create_book(libro: LibroSchema) -> dict:
     db = Session()
     bookService(db).create_book(libro)
     return ({"Mensaje": "Se ha registrado el libro "+libro.titulo})
 
-@book_router.put('/books/{id}',tags=["book"])
-def update_book(id:int,libro:LibroBase):
+@libro_router.put('/books/{id}',tags=["book"])
+def update_book(id:int,libro:LibroSchema):
     db=Session()
     result=bookService(db).get_books(id)
     if not result:
@@ -42,7 +43,7 @@ def update_book(id:int,libro:LibroBase):
     return {"Mensaje":"Se ha modificado el libro con el id "+str(id)}
 
 
-@book_router.delete('/books/{id}',tags=["book"])
+@libro_router.delete('/books/{id}',tags=["book"])
 def delete_book(id: int)-> dict:
     db = Session()
     result: Libro=db.query(Libro).filter(Libro.id == id).first()
