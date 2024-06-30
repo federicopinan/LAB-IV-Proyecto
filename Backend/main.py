@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-from database import engine, Base
+from app.database import engine, Base
 from routers.categoria import categoria_router
 from routers.libro import libro_router
 from routers.prestamo import prestamo_router
@@ -16,3 +16,8 @@ app.include_router(prestamo_router)
 app.include_router(usuario_router)
 
 Base.metadata.create_all(bind=engine)
+
+import uvicorn 
+
+if __name__ == "__main__":
+	uvicorn.run(app, host="127.0.0.1", port=8000)
