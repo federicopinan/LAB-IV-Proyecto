@@ -13,5 +13,5 @@ class CategoriaUpdate(CategoriaBase):
 class Categoria(CategoriaBase):
     id: int
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True

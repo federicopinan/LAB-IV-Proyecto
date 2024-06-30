@@ -16,5 +16,5 @@ class LibroUpdate(LibroBase):
 class Libro(LibroBase):
     id: int
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True

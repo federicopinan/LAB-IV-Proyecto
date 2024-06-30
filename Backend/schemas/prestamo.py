@@ -16,5 +16,5 @@ class Prestamo(PrestamoBase):
     id: int
     fecha_devolucion: datetime = None
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True

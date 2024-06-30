@@ -27,5 +27,5 @@ class Usuario(UsuarioBase):
     id: int
     rol: RolEnum
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True
