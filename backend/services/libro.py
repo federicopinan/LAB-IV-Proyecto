@@ -1,7 +1,7 @@
-from models.book import booksmodel
-from schemas.book import booksSchema
+from models.libro import Libro as booksmodel
+from schemas.libro import Libro as booksSchema
 
-class bookService():
+class LibroServicio():
     def __init__(self,db)-> None:
         self.db = db
 

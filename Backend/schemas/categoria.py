@@ -1,17 +1,18 @@
 from pydantic import BaseModel, Field
 
-class CategoriaBase(BaseModel):
+class Categoria(BaseModel):
+    id: int
     nombre: str = Field(..., min_length=1, max_length=50)
     descripcion: str = Field(None, max_length=255)
 
-class CategoriaCreate(CategoriaBase):
-    pass
+# class CategoriaCreate(CategoriaBase):
+#     pass
 
-class CategoriaUpdate(CategoriaBase):
-    pass
+# class CategoriaUpdate(CategoriaBase):
+#     pass
 
-class Categoria(CategoriaBase):
-    id: int
+# class Categoria(CategoriaBase):
+    
 
 class Config:
     orm_mode = True

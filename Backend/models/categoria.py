@@ -3,10 +3,10 @@ from sqlalchemy.orm import relationship
 from app.database import Base
 
 class Categoria(Base):
-    __tablename__ = "categorias"
+    __tablename__ = "Categoria"
 
     id = Column(Integer, primary_key=True, index=True)
-    nombre = Column(String, unique=True, nullable=False)
-    descripcion = Column(String, nullable=True)
+    nombre = Column(String(30), unique=True, nullable=False)
+    descripcion = Column(String(30), nullable=True)
 
-    libros = relationship("Libro", back_populates="categoria")
+    libros = relationship("Libro", back_populates="Categoria")

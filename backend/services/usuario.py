@@ -1,7 +1,7 @@
-from models.user import usuariosModel
-from schemas.user import userSchema
+from models.usuario import Usuario as usuariosModel
+from schemas.usuario import  Usuario as  userSchema
 
-class userService():
+class UsuarioServicio():
     def __init__(self,db) -> None:
         self.db=db
 

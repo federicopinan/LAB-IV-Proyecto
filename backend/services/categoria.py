@@ -1,7 +1,7 @@
-from models.category import categoryModel
-from schemas.category import categorySchema
+from models.categoria import Categoria as categoryModel
+from schemas.categoria import Categoria as categorySchema
 
-class categoryService():
+class CategoriaServicio():
     def __init__(self,db) -> None:
         self.db=db
 

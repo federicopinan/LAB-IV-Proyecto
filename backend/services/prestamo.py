@@ -1,7 +1,7 @@
-from models.loan import loanModel
-from schemas.loan import loanSchema
+from models.prestamo import Prestamo as loanModel
+from schemas.prestamo import Prestamo as  loanSchema
 
-class loanService():
+class PrestamoServicio():
     def __init__(self,db) -> None:
         self.db=db
 
