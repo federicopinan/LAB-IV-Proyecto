@@ -1,11 +1,19 @@
-from sqlalchemy import Column, Integer, String, DECIMAL,Enum,ForeignKey
+from sqlalchemy import Column, Integer, String, Enum
+from sqlalchemy.orm import relationship
+from app.database import Base
+from enum import Enum as PyEnum
 
-from database import Base
+class RolEnum(PyEnum):
+    bibliotecario = "Bibliotecario"
+    cliente = "Cliente"
 
-class usuariosModel(Base):
-    __tablename__ = "user"
-    id= Column (Integer, primary_key=True, autoincrement=True)
-    nombre=Column (String)
-    email=Column(String)
-    contraseña=Column(String)
-    rol= Column(Enum("Bibliotecario","Cliente"))
+class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
+    contrasena = Column(String, nullable=False)
+    rol = Column(Enum(RolEnum), nullable=False)
+
+    prestamos = relationship("Prestamo", back_populates="usuario")

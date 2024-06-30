@@ -10,8 +10,8 @@ def get_users(self):
     return result
 
 def get_users(self,id):
-   result = self.db.query(usuariosModel).filter(usuariosModel.id == id).first()
-   return result 
+    result = self.db.query(usuariosModel).filter(usuariosModel.id == id).first()
+    return result 
 
 def create_user(self,user:userSchema):
     new_user= usuariosModel(**user.dict())

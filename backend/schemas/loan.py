@@ -1,11 +1,20 @@
+from pydantic import BaseModel, Field
 from datetime import datetime
 
-from pydantic import BaseModel, Field, EmailStr
-from typing import Optional, List
+class PrestamoBase(BaseModel):
+    libro_id: int
+    usuario_id: int
+    fecha_prestamo: datetime
 
-class loanSchema(BaseModel):
-    id:Optional[int]=None
-    libro_id:Optional[int]=None
-    usuario_id:Optional[int]=None
-    fecha_prestamo:datetime
-    fecha_devolucion:datetime
+class PrestamoCreate(PrestamoBase):
+    pass
+
+class PrestamoUpdate(BaseModel):
+    fecha_devolucion: datetime = None
+
+class Prestamo(PrestamoBase):
+    id: int
+    fecha_devolucion: datetime = None
+
+    class Config:
+        orm_mode = True
