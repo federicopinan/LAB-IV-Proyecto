@@ -6,7 +6,7 @@ from typing import Optional, List
 from starlette.responses import JSONResponse
 from app.database import Session
 from models.categoria import Categoria
-from services.categoria import categoryService
+from services.categoria import CategoriaServicio
 from schemas.categoria import Categoria as CategoriaSchema
 from middlewares.jwt_manager import JWTBearer
 
@@ -15,30 +15,30 @@ categoria_router = APIRouter()
 @categoria_router.get('/category', tags=['category'],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
 def get_Category()-> List[CategoriaSchema]:
     db = Session()
-    result = categoryService(db).get_categories()
+    result = CategoriaServicio(db).get_categories()
     return result
 
 @categoria_router.get('/category/{id}', tags=['category'])
 def get_Category(id: int) -> CategoriaSchema:
     db = Session()
-    result = categoryService(db).get_categories(id)
+    result = CategoriaServicio(db).get_categories(id)
     return result
 
 
 @categoria_router.post('/category', tags=['category'], response_model=dict, status_code=201)
 def create_category(cat: CategoriaSchema) -> dict:
     db = Session()
-    categoryService(db).create_categorie(cat)
+    CategoriaServicio(db).create_categorie(cat)
     return ({"Mensaje": "Se ha registrado la categoria "+cat.nombre})
 
 @categoria_router.put('/category/{id}',tags=["category"])
 def update_category(id:int,cat:CategoriaSchema):
     db=Session()
-    result=categoryService(db).get_categories(id)
+    result=CategoriaServicio(db).get_categories(id)
     if not result:
         return("No se encontro lacategoria especificada")
 
-    categoryService(db).update_category(id,cat)
+    CategoriaServicio(db).update_category(id,cat)
     return {"Mensaje":"Se ha modificado la categoria con el id "+str(id)}
 
 
@@ -48,5 +48,5 @@ def delete_category(id: int)-> dict:
     result: Categoria=db.query(Categoria).filter(Categoria.id == id).first()
     if not result:
         return {"message": "No se encontró"}
-    categoryService(db).delete_categorie(id)
+    CategoriaServicio(db).delete_categorie(id)
     return {"message": "Se ha eliminado la categoria"}

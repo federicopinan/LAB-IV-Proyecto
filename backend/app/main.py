@@ -7,6 +7,8 @@ from routers.prestamo import prestamo_router
 from routers.usuario import usuario_router
 
 app = FastAPI()
+app.version = "1.0.0"
+app.description = "TPI de la materia Laboratorio IV"
 
 app.include_router(categoria_router)
 app.include_router(libro_router)
