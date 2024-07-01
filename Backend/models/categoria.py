@@ -6,8 +6,8 @@ from config.database import Base
 class Categoria(Base):
     __tablename__ = "Categoria"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer,autoincrement=True,primary_key=True)
     nombre = Column(String(30), unique=True, nullable=False)
     descripcion = Column(String(30), nullable=True)
 
-    libros = relationship("Libro", back_populates="Categoria")
+    #libros = relationship("Libro", back_populates="Categoria")

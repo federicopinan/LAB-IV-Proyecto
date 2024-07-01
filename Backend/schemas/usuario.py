@@ -6,7 +6,7 @@ from enum import Enum
 #     cliente = "Cliente"
 #! Creamos el esquema de Usuario
 class Usuario(BaseModel):
-    id: int
+    id: int|None=None
     nombre: str = Field(..., min_length=1, max_length=50)
     email: EmailStr
     contrasena: str = Field(None, min_length=6, max_length=100)

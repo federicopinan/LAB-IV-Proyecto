@@ -6,8 +6,8 @@ class CategoriaServicio():
     def __init__(self,db) -> None:
         self.db=db
 
-    def get_categories(self):
-        result=self.dbquery(categoryModel).all()
+    def get_categoria(self):
+        result=self.db.query(categoryModel).all()
         return result
 
     def get_categories(self,id):

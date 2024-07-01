@@ -6,7 +6,7 @@ from config.database import Base
 class Libro(Base):
     __tablename__ = "Libro"
 
-    id = Column(Integer, primary_key=True, index=True)  
+    id = Column(Integer,autoincrement=True, primary_key=True)  
     titulo = Column(String(30), nullable=False)
     autor = Column(String(30), nullable=False)
     isbn = Column(String(30), unique=True, nullable=False)
@@ -14,5 +14,5 @@ class Libro(Base):
     disponible = Column(Boolean,default=True)
     categoria_id = Column(Integer, ForeignKey('Categoria.id'), nullable=False)
 
-    categoria = relationship("Categoria", back_populates="Libro")
-    prestamos = relationship("Prestamo", back_populates="Libro")
+    # categoria = relationship("Categoria", back_populates="Libro")
+    # prestamos = relationship("Prestamo", back_populates="Libro")

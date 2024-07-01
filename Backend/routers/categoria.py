@@ -15,7 +15,7 @@ categoria_router = APIRouter()
 @categoria_router.get('/category', tags=['category'],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
 def get_Category()-> List[CategoriaSchema]:
     db = Session()
-    result = CategoriaServicio(db).get_categories()
+    result = CategoriaServicio(db).get_categoria()
     return result
 
 @categoria_router.get('/category/{id}', tags=['category'])

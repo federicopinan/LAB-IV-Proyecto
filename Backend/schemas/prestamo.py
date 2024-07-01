@@ -3,7 +3,7 @@ from datetime import datetime
 
 #! Creamos el esquema de Prestamo
 class Prestamo(BaseModel):
-    id: int
+    id: int|None=None
     libro_id: int
     usuario_id: int
     fecha_prestamo: datetime

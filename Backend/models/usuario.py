@@ -11,7 +11,7 @@ from enum import Enum as PyEnum
 class Usuario(Base):
     __tablename__ = "Usuario"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer,autoincrement=True, primary_key=True)
     nombre = Column(String(30), nullable=False)
     email = Column(String(30), unique=True, index=True, nullable=False)
     contrasena = Column(String(30), nullable=False)
