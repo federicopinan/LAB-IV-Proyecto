@@ -50,3 +50,20 @@ def delete_loan(id: int)-> dict:
         return {"message": "No se encontró"}
     PrestamoServicio(db).delete_loan(id)
     return {"message": "Se ha eliminado el libro"}
+
+# Obtener la lista de préstamos activos de un usuario.
+@prestamo_router.get("/loans/prestamosactivos/{id}",tags=["loan"])
+def Get_Active_Loans_ByUser(id:int) ->PrestamoSchema:
+    db = Session()
+    result = PrestamoServicio(db).get_prestamos_activost(id)
+    return result
+
+#Obtener el historial de préstamos de un usuario
+@prestamo_router.get("/loans/prestamoshistorial/{id}",tags=["loan"])
+def Get_LoanHistory_ByUser(id:int) ->PrestamoSchema:
+    db=Session()
+    result = PrestamoServicio(db).get_historial_prestamos(id)
+    return result
+
+            
+                     

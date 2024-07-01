@@ -51,3 +51,10 @@ def delete_book(id: int)-> dict:
         return {"message": "No se encontró"}
     LibroServicio(db).delete_book(id)
     return {"message": "Se ha eliminado el libro"}
+
+#Listar todos los libros de una categoría específica.
+@libro_router.get("/booksbycategory/{id}",tags=["book"])
+def get_Book_By_CategoryID(id:int)->dict:
+    db=Session
+    result = LibroServicio(db).get_libros_por_categoria(id)
+    return result

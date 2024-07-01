@@ -35,5 +35,8 @@ class LibroServicio():
         self.db.query(booksmodel).filter(booksmodel.id == id).delete()
         self.db.commit()
         return
+    #Listar todos los libros de una categoría específica.
+    def get_libros_por_categoria(self,categoria_id: int):
+        return self.db.query(booksmodel).filter(booksmodel.categoria_id == categoria_id).all()
 
 

@@ -33,3 +33,12 @@ class PrestamoServicio():
         self.db.query(loanModel).filter(loanModel.id == id).delete()
         self.db.commit()
         return
+    
+    #Obtener Prestamos activos de un usuario por id de usuario
+    def get_prestamos_activos(self, id: int):
+        return self.db.query(loanModel).filter(loanModel.usuario_id == id, loanModel.fecha_devolucion == None,loanModel.fecha_prestamo != None).all()
+    
+    #Obtener el historial de préstamos de un usuario por id de usuario
+    def get_historial_prestamos(self, usuario_id: int):
+        return self.db.query(loanModel).filter(loanModel.usuario_id == usuario_id).all()
+    
