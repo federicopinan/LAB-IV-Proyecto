@@ -4,7 +4,7 @@ from enum import Enum
 # class RolEnum(str, Enum):
 #     bibliotecario = "Bibliotecario"
 #     cliente = "Cliente"
-
+#! Creamos el esquema de Usuario
 class Usuario(BaseModel):
     id: int
     nombre: str = Field(..., min_length=1, max_length=50)

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
 
+#! Creamos el esquema de Prestamo
 class Prestamo(BaseModel):
     id: int
     libro_id: int

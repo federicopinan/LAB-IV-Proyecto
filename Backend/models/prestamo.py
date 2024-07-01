@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from config.database import Base
 
+#! Creamos el ORM de Prestamo
 class Prestamo(Base):
     __tablename__ = "Prestamo"
 

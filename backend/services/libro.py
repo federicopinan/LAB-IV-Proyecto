@@ -1,6 +1,7 @@
 from models.libro import Libro as booksmodel
 from schemas.libro import Libro as booksSchema
 
+#! Funciones CRUD para los endpoints del router libro
 class LibroServicio():
     def __init__(self,db)-> None:
         self.db = db
@@ -26,6 +27,7 @@ class LibroServicio():
         book.isbn=data.isbn
         book.editorial=data.editorial
         book.categoria_id=data.categoria_id
+        book.disponible=data.disponible
         self.db.commit()
         return
 

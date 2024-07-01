@@ -1,6 +1,7 @@
 from models.prestamo import Prestamo as loanModel
 from schemas.prestamo import Prestamo as  loanSchema
 
+#! Funciones CRUD para los endpoints del router Prestamo
 class PrestamoServicio():
     def __init__(self,db) -> None:
         self.db=db

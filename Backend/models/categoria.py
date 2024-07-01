@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from config.database import Base
 
+#! Creamos el ORM de Categoria
 class Categoria(Base):
     __tablename__ = "Categoria"
 

@@ -1,6 +1,7 @@
 from models.categoria import Categoria as categoryModel
 from schemas.categoria import Categoria as categorySchema
 
+#! Funciones CRUD para los endpoints del router Categoria
 class CategoriaServicio():
     def __init__(self,db) -> None:
         self.db=db

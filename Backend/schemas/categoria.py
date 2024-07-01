@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+#! Creamos el esquema de Categoría
 class Categoria(BaseModel):
     id: int
     nombre: str = Field(..., min_length=1, max_length=50)

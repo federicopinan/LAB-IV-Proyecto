@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from config.database import Base
 from enum import Enum as PyEnum
 
+#! Creamos el ORM de Usuario
 # class RolEnum(PyEnum):
 #     bibliotecario = "Bibliotecario"
 #     cliente = "Cliente"

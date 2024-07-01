@@ -1,6 +1,7 @@
 from models.usuario import Usuario as usuariosModel
 from schemas.usuario import  Usuario as  userSchema
 
+#! Funciones CRUD para los endpoints del router Usuario
 class UsuarioServicio():
     def __init__(self,db) -> None:
         self.db=db
