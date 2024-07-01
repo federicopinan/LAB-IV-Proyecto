@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from starlette.responses import JSONResponse
-from app.database import Session
+from config.database import Session
 from models.usuario import Usuario
 from services.usuario import UsuarioServicio
 from schemas.usuario import Usuario as UsuarioSchema

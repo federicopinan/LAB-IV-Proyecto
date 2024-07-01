@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from app.database import Base
+from config.database import Base
 
 class Prestamo(Base):
     __tablename__ = "Prestamo"

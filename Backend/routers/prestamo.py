@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from starlette.responses import JSONResponse
-from app.database import Session
+from config.database import Session
 from models.prestamo import Prestamo
 from services.prestamo import PrestamoServicio
 from schemas.prestamo import Prestamo as PrestamoSchema
