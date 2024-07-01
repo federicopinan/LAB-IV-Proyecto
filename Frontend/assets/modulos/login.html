@@ -1,0 +1,116 @@
+<div class="hold-transition login-page" id="frmLogin">
+    <div class="login-box ">
+        <div class="login-logo">
+            <img
+                class="img-fluid w-50 h-50"
+                src="/img/book-circles-logo-82dff4 (1).webp"
+                style="opacity: 1 " />
+        </div>
+        <!-- /.login-logo -->
+        <div class="card shadow bg-light-brown rounded-3">
+            <div class="card-body bg-darker-brown rounded-3">
+                <p class="login-box-msg">Iniciar sesión</p>
+
+                <form class="needs-validation" novalidate>
+                    <div class="input-group mb-3">
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="loginEmail"
+                            placeholder="Ingrese su Email"
+                            name="loginEmail"
+                            required />
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+
+                        <div class="valid-feedback">Válido.</div>
+                        <div class="invalid-feedback">
+                            Please fill out this field.
+                        </div>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="loginPassword"
+                            placeholder="Ingrese su Password"
+                            name="loginPassword"
+                            required />
+
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+
+                        <div class="valid-feedback">Válido.</div>
+                        <div class="invalid-feedback">
+                            Please fill out this field.
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <!-- Contenedor principal -->
+                    <div
+                        class="d-flex flex-column align-items-center justify-content-center">
+                        <!-- Contenedor del botón -->
+                        <div class="col-4 text-center">
+                            <button
+                                type="button"
+                                id="iniciar-sesion"
+                                class="btn bg-light-orange btn-block rounded">
+                                Sign In
+                            </button>
+                        </div>
+
+                        <!-- Contenedor de la checkbox -->
+                        <div class="row mt-3">
+                            <div class="col-12 text-center">
+                                <div class="icheck-primary">
+                                    <input
+                                        type="checkbox"
+                                        id="remember"
+                                        onchange="rememberMe(event)" />
+                                    <label for="remember"> Recordarme </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- /.social-auth-links -->
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+</div>
+
+<style>
+    div.login-page{
+        background-color: #ecf39e; /* Marrón clarito */
+    }
+    .bg-light-brown {
+        background-color: #ecf39e; /* Color un poco más oscuro para la card */
+    }
+    .bg-darker-brown {
+        background-color: #90a955; /* Color más oscuro para el contenido de la card */
+        color: whitesmoke;
+    }
+    .bg-light-orange {
+        background-color: #4f772d; /* Naranja claro para el botón */
+        color: white;
+    }
+    .card {
+        border-radius: 15px; /* Hacer las esquinas redondeadas */
+    }
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agregar sombra */
+    }
+</style>

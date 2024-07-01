@@ -1,0 +1,101 @@
+<!-- Aside -->
+<!-- Cambiando la clase sidebar-light-warning a sidebar-custom se puede cambiar el color de fondo del sidebar -->
+<aside class="main-sidebar sidebar-custom elevation-4">
+    <!-- Brand Logo -->
+    <!-- Cambiando la clase navbar-warning a navbar-custom-logo se puede cambiar el color de fondo donde está el logo -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img
+                    src="/img/book-circles-logo-82dff4 (1).webp"
+                    class="img-circle elevation-2 usuarioActivoFoto"
+                    alt="User Image" />
+            </div>
+            <div class="info">
+                <a href="#" class="d-block usuarioActivo data-idUsuario"></a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul
+                class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+            with font-awesome or any other icon font library -->
+
+                <li class="nav-item">
+                    <a href="#/home" class="nav-link active">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>Home</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#/usuarios" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Usuarios</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#/categorias" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>Categorias</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#/productos" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-bag"></i>
+                        <p>Libros</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#/ventas" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>Prestamos</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+<!-- /.aside -->
+
+<style>
+    .sidebar-custom {
+        background-color: #ECF39E; /* Amarillo muy claro */
+    }
+    .navbar-custom-logo {
+        background-color: #4F772D; /* Verde intermedio */
+    }
+    .sidebar-custom .user-panel .image img {
+        border: 2px solid #132A13; /* Verde oscuro */
+    }
+    .sidebar-custom .user-panel .info a {
+        color: #132A13; /* Verde oscuro */
+    }
+    .sidebar-custom .nav-sidebar .nav-link.active {
+        background-color: #90A955; /* Verde oliva claro */
+        color: #132A13; /* Verde oscuro */
+    }
+    .sidebar-custom .nav-sidebar .nav-link {
+        color: #132A13; /* Verde oscuro */
+    }
+    .sidebar-custom .nav-sidebar .nav-link:hover {
+        background-color: #31572C; /* Verde oscuro intermedio */
+        color: #ECF39E; /* Verde claro para el texto en hover */
+    }
+    .sidebar-custom .nav-sidebar .nav-link .nav-icon {
+        color: #132A13; /* Verde oscuro */
+    }
+</style>
