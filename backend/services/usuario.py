@@ -7,10 +7,10 @@ class UsuarioServicio():
         self.db=db
 
     def get_users(self):
-        result=self.dbquery(usuariosModel).all()
+        result=self.db.query(usuariosModel).all()
         return result
 
-    def get_users(self,id):
+    def get_user(self,id):
         result = self.db.query(usuariosModel).filter(usuariosModel.id == id).first()
         return result 
 

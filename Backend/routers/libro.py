@@ -22,7 +22,7 @@ def get_Books()-> List[LibroSchema]:
 @libro_router.get('/books/{id}', tags=['book'])
 def get_Book(id: int) -> LibroSchema:
     db = Session()
-    result = LibroServicio(db).get_books(id)
+    result = LibroServicio(db).get_book(id)
     return result
 
 
@@ -35,7 +35,7 @@ def create_book(libro: LibroSchema) -> dict:
 @libro_router.put('/books/{id}',tags=["book"])
 def update_book(id:int,libro:LibroSchema):
     db=Session()
-    result=LibroServicio(db).get_books(id)
+    result=LibroServicio(db).get_book(id)
     if not result:
         return("No se encontro el libro especificado")
 
@@ -55,6 +55,6 @@ def delete_book(id: int)-> dict:
 #Listar todos los libros de una categoría específica.
 @libro_router.get("/booksbycategory/{id}",tags=["book"])
 def get_Book_By_CategoryID(id:int)->dict:
-    db=Session
+    db=Session()
     result = LibroServicio(db).get_libros_por_categoria(id)
     return result

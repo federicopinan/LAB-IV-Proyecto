@@ -21,7 +21,7 @@ def get_loans()-> List[PrestamoSchema]:
 @prestamo_router.get('/loans/{id}', tags=['loan'])
 def get_loan(id: int) -> PrestamoSchema:
     db = Session()
-    result = PrestamoServicio(db).get_loans(id)
+    result = PrestamoServicio(db).get_loan(id)
     return result
 
 
@@ -34,7 +34,7 @@ def create_loan(prestamo: PrestamoSchema) -> dict:
 @prestamo_router.put('/loans/{id}',tags=["loan"])
 def update_loan(id:int,prestamo:PrestamoSchema):
     db=Session()
-    result=PrestamoServicio(db).get_loans(id)
+    result=PrestamoServicio(db).get_loan(id)
     if not result:
         return("No se encontro el prestamo especificado")
 
@@ -55,7 +55,7 @@ def delete_loan(id: int)-> dict:
 @prestamo_router.get("/loans/prestamosactivos/{id}",tags=["loan"])
 def Get_Active_Loans_ByUser(id:int) ->PrestamoSchema:
     db = Session()
-    result = PrestamoServicio(db).get_prestamos_activost(id)
+    result = PrestamoServicio(db).get_prestamos_activos(id)
     return result
 
 #Obtener el historial de préstamos de un usuario

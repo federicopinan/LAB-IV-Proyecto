@@ -7,10 +7,10 @@ class LibroServicio():
         self.db = db
 
     def get_books(self):
-        result=self.dbquery(booksmodel).all()
+        result=self.db.query(booksmodel).all()
         return result
 
-    def get_books(self,id):
+    def get_book(self,id):
         result = self.db.query(booksmodel).filter(booksmodel.id == id).first()
         return result 
 

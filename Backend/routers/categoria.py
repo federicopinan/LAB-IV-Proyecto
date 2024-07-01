@@ -13,7 +13,7 @@ from middlewares.jwt_manager import JWTBearer
 categoria_router = APIRouter()
 
 @categoria_router.get('/category', tags=['category'],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
-def get_Category()-> List[CategoriaSchema]:
+def get_Categorias()-> List[CategoriaSchema]:
     db = Session()
     result = CategoriaServicio(db).get_categoria()
     return result

@@ -9,6 +9,10 @@ from models.usuario import Usuario
 from services.usuario import UsuarioServicio
 from schemas.usuario import Usuario as UsuarioSchema
 from middlewares.jwt_manager import JWTBearer
+from fastapi import APIRouter
+from pydantic import BaseModel
+from utils.jwt_manager import create_token
+from fastapi.responses import JSONResponse
 
 usuario_router = APIRouter()
 
@@ -21,7 +25,7 @@ def get_users()-> List[UsuarioSchema]:
 @usuario_router.get('/users/{id}', tags=['user'])
 def get_user(id: int) -> UsuarioSchema:
     db = Session()
-    result = UsuarioServicio(db).get_users(id)
+    result = UsuarioServicio(db).get_user(id)
     return result
 
 
@@ -50,3 +54,9 @@ def delete_user(id: int)-> dict:
         return {"message": "No se encontró"}
     UsuarioServicio(db).delete_user(id)
     return {"message": "Se ha eliminado al usuario"}
+
+# @usuario_router.post('/login', tags=['autenticacion'])
+# def login(user: UsuarioSchema):
+#     if user.email == "admin@gmail.com" and user.password == "admin":
+#         token: str = create_token(user.dict())
+#         return JSONResponse(status_code=200, content=token)

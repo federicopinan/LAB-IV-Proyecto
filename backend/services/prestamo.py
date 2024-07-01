@@ -7,10 +7,10 @@ class PrestamoServicio():
         self.db=db
 
     def get_loans(self):
-        result=self.dbquery(loanModel).all()
+        result=self.db.query(loanModel).all()
         return result
 
-    def get_loans(self,id):
+    def get_loan(self,id):
         result = self.db.query(loanModel).filter(loanModel.id == id).first()
         return result 
 
