@@ -26,6 +26,8 @@ app.include_router(libro_router)
 app.include_router(prestamo_router)
 app.include_router(usuario_router)
 
+app.add_middleware(ErrorHandler)
+
 #! Creamos las tablas en la base de datos
 Base.metadata.create_all(bind=engine)
 
@@ -33,8 +35,6 @@ Base.metadata.create_all(bind=engine)
 @app.get('/', tags=['home'])
 def message():
     return HTMLResponse('<h1>Hello world</h1>')
-
-app.add_middleware(ErrorHandler)
 
 
 import uvicorn 
