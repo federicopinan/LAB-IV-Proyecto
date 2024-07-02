@@ -1,88 +1,87 @@
-const url = 'https://65418746f0b8287df1fe755a.mockapi.io/api/TpiLab3/usuarios'
+const url = 'http://127.0.0.1:8000/usuarios'
 
 //API-REST USUARIOS//
+
+async function login(usuario, password) {
+    let cadUrl = 'http://127.0.0.1:8000/login'
+    return await fetch(cadUrl, {
+        method: 'POST',
+        headers: {
+            accept: 'application/json',
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify({email: usuario, password: password}),
+    })
+        .then(respuesta => respuesta.json())
+        .catch(respuesta => respuesta.json())
+}
 
 async function listar(id) {
     let cadUrl
     if (isNaN(id)) cadUrl = url
     else cadUrl = url + '/' + id
-    return await fetch(cadUrl).then(respuesta => respuesta.json())
+    return await fetch(cadUrl, {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            'Content-type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+    }).then(respuesta => respuesta.json())
 }
 
-async function crear(
-    apellido,
-    nombre,
-    correo,
-    password,
-    avatar,
-    pais,
-    ciudad,
-    direccion,
-    telefono,
-    role = 'admin'
-) {
+async function crear(nombre, email, password, rol) {
+    console.log()
     return await fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify({
-            apellido: apellido,
             nombre: nombre,
-            correo: correo,
+            email: email,
             password: password,
-            avatar: avatar,
-            pais: pais,
-            ciudad: ciudad,
-            direccion: direccion,
-            telefono: telefono,
-            role: role,
+            rol: rol,
         }),
-    })
+    }).then(respuesta => respuesta.json())
 }
 
-async function editar(
-    id,
-    apellido,
-    nombre,
-    correo,
-    password,
-    avatar,
-    pais,
-    ciudad,
-    direccion,
-    telefono,
-    role = 'admin'
-) {
+async function editar(id, nombre, email, password, rol) {
     let urlPut = url + '/' + id
     return await fetch(urlPut, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify({
-            apellido: apellido,
+            id,
             nombre: nombre,
-            correo: correo,
             password: password,
-            avatar: avatar,
-            pais: pais,
-            ciudad: ciudad,
-            direccion: direccion,
-            telefono: telefono,
-            role: role,
+            email: email,
+            rol: rol,
         }),
-    })
+    }).then(respuesta => respuesta.json())
 }
 
 async function borrar(id) {
     let urlPut = url + '/' + id
-    return await fetch(urlPut, {
-        method: 'DELETE',
-    })
+    return await fetch(
+        urlPut,
+
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + localStorage.getItem('token'),
+            },
+        }
+    ).then(respuesta => respuesta.json())
 }
 
-export const usuariosServices = {
+export const usuariosServicio = {
+    login,
     listar,
     crear,
     editar,

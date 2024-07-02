@@ -1,6 +1,5 @@
-import { categoriasServices } from "../../servicios/categorias-servicios.js";
-import { productosServices } from "/servicios/productos-servicios.js";
-
+import {librosServices} from '/Frontend/servicios/libros-servicios.js'
+import {prestamoServices} from '/Frontend/servicios/prestamos-servicios.js'
 
 const htmlAmProductos = `
 <div class="card card-dark card-outline">
@@ -158,111 +157,114 @@ const htmlAmProductos = `
 	</form>
 
 
-</div> `;
-var formulario='';
+</div> `
+var formulario = ''
 
-var txtNombre='';
-var txtDescripcion='';
-var fileFoto='';
-var selCategoria='';
-var txtPrecio='';
+var txtNombre = ''
+var txtDescripcion = ''
+var fileFoto = ''
+var selCategoria = ''
+var txtPrecio = ''
 
-var idProducto;
+var idProducto
 
-export async function newRegister(){
-    let d = document;
-    
-    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Producto';
-    d.querySelector('.contenidoTituloSec').innerHTML += 'Agregar';
-    crearFormulario();
+export async function newLibro() {
+    let d = document
 
-    formulario = d.querySelector(".frmAmProducto")
-    formulario.addEventListener("submit", guardar);
+    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Producto'
+    d.querySelector('.contenidoTituloSec').innerHTML += 'Agregar'
+    crearFormulario()
+
+    formulario = d.querySelector('.frmAmProducto')
+    formulario.addEventListener('submit', guardar)
 }
 
-export async function editRegister(id){
-    let d = document;
-    idProducto = id;
-    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Producto';
-    d.querySelector('.contenidoTituloSec').innerHTML += 'Editar';
-    crearFormulario();
+export async function editlibro(id) {
+    let d = document
+    idProducto = id
+    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Producto'
+    d.querySelector('.contenidoTituloSec').innerHTML += 'Editar'
+    crearFormulario()
 
-    formulario = d.querySelector(".frmAmProducto")
-    formulario.addEventListener("submit", modificar);
-    let producto =  await productosServices.listar(id);
+    formulario = d.querySelector('.frmAmProducto')
+    formulario.addEventListener('submit', modificar)
+    let producto = await productosServices.listar(id)
 
-    
-    txtDescripcion.value= producto.descripcion;
-    txtNombre.value= producto.nombre;
-   
-    if (producto.foto.length > 0 )
-        fileFoto.src= producto.foto;
-    selCategoria.value= producto.idCategoria;
-    txtPrecio.value= producto.precio;
-    
+    txtDescripcion.value = producto.descripcion
+    txtNombre.value = producto.nombre
+
+    if (producto.foto.length > 0) fileFoto.src = producto.foto
+    selCategoria.value = producto.idCategoria
+    txtPrecio.value = producto.precio
 }
 
-async function crearFormulario(){
-    let d = document;
-    d.querySelector('.rutaMenu').innerHTML = "Productos";
-    d.querySelector('.rutaMenu').setAttribute('href',"#/productos");
+async function crearFormulario() {
+    let d = document
+    d.querySelector('.rutaMenu').innerHTML = 'Productos'
+    d.querySelector('.rutaMenu').setAttribute('href', '#/productos')
 
-    let cP =d.getElementById('contenidoPrincipal');
-    cP.innerHTML =  htmlAmProductos;
-    
-    var script = document.createElement( "script" );
-    script.type = "text/javascript";
-    script.src = '../controladores/validaciones.js';
-    cP.appendChild(script);
-    
-    txtDescripcion= d.getElementById('productoDescripcion');
-    txtNombre= d.getElementById('productoNombre');
-    fileFoto= d.querySelector('.changePicture');
-    txtPrecio= d.getElementById('productoPrecio');
-    selCategoria= d.getElementById('productoCategoria');
-    
+    let cP = d.getElementById('contenidoPrincipal')
+    cP.innerHTML = htmlAmProductos
+
+    var script = document.createElement('script')
+    script.type = 'text/javascript'
+    script.src = '../controladores/validaciones.js'
+    cP.appendChild(script)
+
+    txtDescripcion = d.getElementById('productoDescripcion')
+    txtNombre = d.getElementById('productoNombre')
+    fileFoto = d.querySelector('.changePicture')
+    txtPrecio = d.getElementById('productoPrecio')
+    selCategoria = d.getElementById('productoCategoria')
+
     /*Cargar categorías en select*/
-    let res = await categoriasServices.listar();
+    let res = await librosServices.listar()
     res.forEach(element => {
-        let opcion = d.createElement('option');
-        opcion.value = element.id;
-        opcion.text = element.descripcion;
-        selCategoria.appendChild(opcion);        
-    });
+        let opcion = d.createElement('option')
+        opcion.value = element.id
+        opcion.text = element.descripcion
+        selCategoria.appendChild(opcion)
+    })
 }
 
 function guardar(e) {
-   
-    e.preventDefault();
-   
-    var categoria = selCategoria.options[selCategoria.selectedIndex];
-    
-    
-    productosServices.crear(txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
-        categoria.value, categoria.text )
+    e.preventDefault()
+
+    var categoria = selCategoria.options[selCategoria.selectedIndex]
+
+    prestamoServices
+        .crear(
+            txtNombre.value,
+            txtDescripcion.value,
+            fileFoto.src,
+            txtPrecio.value,
+            categoria.value,
+            categoria.text
+        )
         .then(respuesta => {
-
-            formulario.reset();
-            window.location.href = "#/productos";
-
+            formulario.reset()
+            window.location.href = '#/productos'
         })
-        .catch(error => console.log(error))        
-
-}    
+        .catch(error => console.log(error))
+}
 
 function modificar(e) {
-   
-    e.preventDefault();
-   
-    var categoria = selCategoria.options[selCategoria.selectedIndex];
-    productosServices.editar(idProducto, txtNombre.value, txtDescripcion.value, fileFoto.src, txtPrecio.value, 
-        categoria.value, categoria.text)
+    e.preventDefault()
+
+    var categoria = selCategoria.options[selCategoria.selectedIndex]
+    productosServices
+        .editar(
+            idProducto,
+            txtNombre.value,
+            txtDescripcion.value,
+            fileFoto.src,
+            txtPrecio.value,
+            categoria.value,
+            categoria.text
+        )
         .then(respuesta => {
-
-            formulario.reset();
-            window.location.href = "#/productos";
-
+            formulario.reset()
+            window.location.href = '#/productos'
         })
-        .catch(error => console.log(error))        
-
-}   
+        .catch(error => console.log(error))
+}

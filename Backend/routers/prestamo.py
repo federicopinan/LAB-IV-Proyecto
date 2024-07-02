@@ -12,29 +12,29 @@ from middlewares.jwt_manager import JWTBearer
 
 prestamo_router = APIRouter()
 
-@prestamo_router.get('/loans', tags=['loan'],response_model=List[PrestamoSchema])#,dependencies=[Depends(JWTBearer())])
+@prestamo_router.get('/prestamos', tags=["Prestamos📂"],response_model=List[PrestamoSchema])#,dependencies=[Depends(JWTBearer())])
 def get_loans()-> List[PrestamoSchema]:
     db = Session()
     result = PrestamoServicio(db).get_loans()
     return result
 
-@prestamo_router.get('/loans/{id}', tags=['loan'])
+@prestamo_router.get('/prestamos/{id}', tags=["Prestamos📂"])
 def get_loan(id: int) -> PrestamoSchema:
     db = Session()
-    result = PrestamoServicio(db).get_loans(id)
+    result = PrestamoServicio(db).get_loan(id)
     return result
 
 
-@prestamo_router.post('/loans', tags=['loan'], response_model=dict, status_code=201)
+@prestamo_router.post('/prestamos', tags=["Prestamos📂"], response_model=dict, status_code=201)
 def create_loan(prestamo: PrestamoSchema) -> dict:
     db = Session()
     PrestamoServicio(db).create_loan(prestamo)
     return ({"Mensaje": "Se ha registrado el prestamo "})
 
-@prestamo_router.put('/loans/{id}',tags=["loan"])
+@prestamo_router.put('/prestamos/{id}',tags=["Prestamos📂"])
 def update_loan(id:int,prestamo:PrestamoSchema):
     db=Session()
-    result=PrestamoServicio(db).get_loans(id)
+    result=PrestamoServicio(db).get_loan(id)
     if not result:
         return("No se encontro el prestamo especificado")
 
@@ -42,7 +42,7 @@ def update_loan(id:int,prestamo:PrestamoSchema):
     return {"Mensaje":"Se ha modificado el prestamo con el id "+str(id)}
 
 
-@prestamo_router.delete('/loans/{id}',tags=["loan"])
+@prestamo_router.delete('/prestamos/{id}',tags=["Prestamos📂"])
 def delete_loan(id: int)-> dict:
     db = Session()
     result: Prestamo=db.query(Prestamo).filter(Prestamo.id == id).first()
@@ -52,14 +52,14 @@ def delete_loan(id: int)-> dict:
     return {"message": "Se ha eliminado el libro"}
 
 # Obtener la lista de préstamos activos de un usuario.
-@prestamo_router.get("/loans/prestamosactivos/{id}",tags=["loan"])
+@prestamo_router.get("/prestamos/prestamosactivos/{id}",tags=["Prestamos📂"])
 def Get_Active_Loans_ByUser(id:int) ->PrestamoSchema:
     db = Session()
     result = PrestamoServicio(db).get_prestamos_activost(id)
     return result
 
 #Obtener el historial de préstamos de un usuario
-@prestamo_router.get("/loans/prestamoshistorial/{id}",tags=["loan"])
+@prestamo_router.get("/prestamos/prestamoshistorial/{id}",tags=["Prestamos📂"])
 def Get_LoanHistory_ByUser(id:int) ->PrestamoSchema:
     db=Session()
     result = PrestamoServicio(db).get_historial_prestamos(id)

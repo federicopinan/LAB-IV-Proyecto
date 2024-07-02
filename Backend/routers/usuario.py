@@ -3,50 +3,100 @@ from fastapi import Depends, Path, Query
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Optional, List
-from starlette.responses import JSONResponse
 from config.database import Session
-from models.usuario import Usuario
-from services.usuario import UsuarioServicio
-from schemas.usuario import Usuario as UsuarioSchema
+from models.usuario import Usuario as UsuarioModel
+from fastapi.encoders import jsonable_encoder
 from middlewares.jwt_manager import JWTBearer
+from services.usuario import UsuarioServicio
+from passlib.context import CryptContext
+from utils.jwt_manager import create_token
+from schemas.usuario import Usuario, UsuarioAuth
+from fastapi.responses import JSONResponse
 
 usuario_router = APIRouter()
 
-@usuario_router.get('/users', tags=['user'],response_model=List[UsuarioSchema])#,dependencies=[Depends(JWTBearer())])
-def get_users()-> List[UsuarioSchema]:
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def authenticate_user(users:dict, email: str, password: str)->Usuario:
+    user = get_user(users, email)
+    if not user:
+        return False
+    if not verify_password(password, user.password):
+        return False
+    user = Usuario.model_validate(user)
+    return user
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
+
+def get_user(users:list, email: str):
+    for item in users:
+        if item.email == email:
+            return item
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)    
+
+@usuario_router.post('/login', tags=['Auth✅'])
+def login(user: UsuarioAuth):
     db = Session()
-    result = UsuarioServicio(db).get_users()
-    return result
+    usuariosDb:UsuarioModel= UsuarioServicio(db).get_usuarios()
+   
+    usuario= authenticate_user(usuariosDb, user.email, user.password)
+    if not user:
+       return JSONResponse(status_code=401, content={'accesoOk': False,'token':''})  
+    else:
+        token: str = create_token(user.model_dump())
+        return JSONResponse(status_code=200, content={'accesoOk': True,'token':token, 'usuario': jsonable_encoder(usuario) })
 
-@usuario_router.get('/users/{id}', tags=['user'])
-def get_user(id: int) -> UsuarioSchema:
+
+@usuario_router.get('/usuarios', tags=["Usuarios😐"], response_model=List[Usuario], status_code=200, dependencies=[Depends(JWTBearer())])
+def get_usuarios() -> List[Usuario]:
     db = Session()
-    result = UsuarioServicio(db).get_users(id)
-    return result
+    result = UsuarioServicio(db).get_usuarios()
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@usuario_router.post('/users', tags=['user'], response_model=dict, status_code=201)
-def create_user(user: UsuarioSchema) -> dict:
+@usuario_router.get('/usuarios/{id}', tags=["Usuarios😐"], response_model=Usuario, dependencies=[Depends(JWTBearer())])
+def get_usuario(id: int = Path(ge=1, le=2000)) -> Usuario:
     db = Session()
-    UsuarioServicio(db).create_user(user)
-    return ({"Mensaje": "Se ha registrado al usuario "+user.nombre})
-
-@usuario_router.put('/users/{id}',tags=["user"])
-def update_user(id:int,user:UsuarioSchema):
-    db=Session()
-    result=UsuarioServicio(db).get_users(id)
+    result = UsuarioServicio(db).get_usuario(id)
     if not result:
-        return("No se encontro la usuario especificado")
-
-    UsuarioServicio(db).update_user(id,user)
-    return {"Mensaje":"Se ha modificado al usuario con el id "+str(id)}
+        return JSONResponse(status_code=404, content={'message': "Usuario no encontrado."})
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
 
 
-@usuario_router.delete('/users/{id}',tags=["user"])
-def delete_user(id: int)-> dict:
+@usuario_router.get('/usuarios/', tags=["Usuarios😐"], response_model=List[Usuario], dependencies=[Depends(JWTBearer())])
+def get_usuario_by_email(email: str = Query(min_length=5, max_length=35)) -> List[Usuario]:
     db = Session()
-    result: Usuario=db.query(Usuario).filter(Usuario.id== id).first()
+    result = UsuarioServicio(db).get_usuario_by_email(email)
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))
+
+
+@usuario_router.post('/usuarios', tags=["Usuarios😐"], response_model=dict, status_code=201)#, dependencies=[Depends(JWTBearer())])
+def create_usuario(usuario: Usuario) -> dict:
+    usuario.password = get_password_hash(usuario.password.get_secret_value())
+    db = Session()
+    UsuarioServicio(db).create_usuario(usuario)
+    return JSONResponse(status_code=201, content={"message": "Se ha registrado el usuario con éxito."})
+
+
+@usuario_router.put('/usuarios/{id}', tags=["Usuarios😐"], response_model=dict, status_code=200, dependencies=[Depends(JWTBearer())])
+def update_usuario(id: int, usuario: Usuario)-> dict:
+    usuario.password = get_password_hash(usuario.password.get_secret_value())
+    db = Session()
+    result = UsuarioServicio(db).get_usuario(id)
     if not result:
-        return {"message": "No se encontró"}
-    UsuarioServicio(db).delete_user(id)
-    return {"message": "Se ha eliminado al usuario"}
+        return JSONResponse(status_code=404, content={'message': "Usuario no encontrado."})
+    UsuarioServicio(db).update_usuario(id, usuario)
+    return JSONResponse(status_code=200, content={"message": "Se ha modificado el usuario con éxito."})
+
+
+@usuario_router.delete('/usuarios/{id}', tags=["Usuarios😐"], response_model=dict, status_code=200, dependencies=[Depends(JWTBearer())])
+def delete_usuario(id: int)-> dict:
+    db = Session()
+    result: UsuarioModel = db.query(UsuarioModel).filter(UsuarioModel.id == id).first()
+    if not result:
+        return JSONResponse(status_code=404, content={"message": "No se encontró el usuario."})
+    UsuarioServicio(db).delete_usuario(id)
+    return JSONResponse(status_code=200, content={"message": "Se ha eliminado el usuario con éxito."})

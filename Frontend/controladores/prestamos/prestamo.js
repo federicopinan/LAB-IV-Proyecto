@@ -1,25 +1,27 @@
-import {productosServices} from '../../servicios/productos-servicios.js'
-import {newRegister} from './new.js'
-import {editRegister} from './new.js'
+// import {newRegister as newPrestamo} from './new.js'
+// import {editRegister as editPrestamo} from './new.js'
+import {prestamoServices} from '../../servicios/prestamos-servicios.js'
 
-const htmlProductos = `<div class="card">
+const htmlPrestamos = `
+<div class="card">
    <div class="card-header">
    
    <h3 class="card-title"> 
-       <a class="btn bg-dark btn-sm btnAgregarProducto" href="#/newProducto">Agregar Producto</a>
+       <a class="btn bg-dark btn-sm btnAgregarPrestamo" href="#/newPrestamo">Agregar Prestamo</a>
    </h3>
 
    </div>
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="productosTable" class="table table-bordered table-striped tableProducto" width="100%">
+   <table id="PrestamosTable" class="table table-bordered table-striped tablePrestamo" width="100%">
        <thead>
            <tr>
            <th># </th>
-           <th>Nombre</th>
-           <th>Precio</th>
-           <th>Categoria</th>
+           <th>Vehículo ID</th>
+           <th>Usuario ID</th>
+           <th>Fecha Prestamo</th>
+           <th>Fecha Devolución</th>
            <th>Acciones</th>
            </tr>
        </thead>
@@ -29,39 +31,36 @@ const htmlProductos = `<div class="card">
    <!-- /.card-body -->
 </div> `
 
-export async function Productos() {
+export async function Prestamos() {
     let d = document
     let res = ''
-    d.querySelector('.contenidoTitulo').innerHTML = 'Productos'
+    d.querySelector('.contenidoTitulo').innerHTML = 'Prestamos'
     d.querySelector('.contenidoTituloSec').innerHTML = ''
-    d.querySelector('.rutaMenu').innerHTML = 'Productos'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/productos')
+    d.querySelector('.rutaMenu').innerHTML = 'Prestamos'
+    d.querySelector('.rutaMenu').setAttribute('href', '#/Prestamos')
     let cP = d.getElementById('contenidoPrincipal')
 
-    res = await productosServices.listar()
+    res = await prestamoServices.listar()
     res.forEach(element => {
         element.action =
-            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarProducto'  href='#/editProducto' data-idProducto='" +
+            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarPrestamo'  href='#/editPrestamo' data-idPrestamo='" +
             element.id +
-            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarProducto'href='#/delProducto' data-idProducto='" +
+            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarPrestamo'href='#/delPrestamo' data-idPrestamo='" +
             element.id +
             "'><i class='fas fa-trash'></i></a></div>"
     })
 
-    cP.innerHTML = htmlProductos
-
+    cP.innerHTML = htmlPrestamos
     llenarTabla(res)
 
-    let btnAgregar = d.querySelector('.btnAgregarProducto')
-
+    let btnAgregar = d.querySelector('.btnAgregarPrestamo')
     btnAgregar.addEventListener('click', agregar)
 }
 
 function enlazarEventos(oSettings) {
     let d = document
-    let btnEditar = d.querySelectorAll('.btnEditarProducto')
-    let btnBorrar = d.querySelectorAll('.btnBorrarProducto')
-
+    let btnEditar = d.querySelectorAll('.btnEditarPrestamo')
+    let btnBorrar = d.querySelectorAll('.btnBorrarPrestamo')
     for (let i = 0; i < btnEditar.length; i++) {
         btnEditar[i].addEventListener('click', editar)
         btnBorrar[i].addEventListener('click', borrar)
@@ -69,25 +68,24 @@ function enlazarEventos(oSettings) {
 }
 
 function agregar() {
-    newRegister()
+    newPrestamo()
 }
+
 function editar() {
-    let id = this.getAttribute('data-idProducto')
-    editRegister(id)
+    let id = parseInt(this.getAttribute('data-idPrestamo'), 10)
+    editPrestamo(id)
 }
 
 async function borrar() {
-    let id = this.getAttribute('data-idProducto')
+    let id = parseInt(this.getAttribute('data-idPrestamo'), 10)
     let borrar = 0
     await Swal.fire({
         title: 'Está seguro que desea eliminar el registro?',
         showDenyButton: true,
         confirmButtonText: 'Si',
         denyButtonText: `Cancelar`,
-
         focusDeny: true,
     }).then(result => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             borrar = 1
         } else if (result.isDenied) {
@@ -95,26 +93,27 @@ async function borrar() {
             Swal.fire('Se canceló la eliminación', '', 'info')
         }
     })
-    if (borrar === 1) await productosServices.borrar(id)
-    window.location.href = '#/productos'
+    if (borrar === 1) await PrestamosServices.borrar(id)
+    window.location.href = '#/Prestamos'
 }
 
 function llenarTabla(res) {
-    new DataTable('#productosTable', {
+    let dtable = new DataTable('#PrestamosTable', {
         responsive: true,
         data: res,
         columns: [
             {data: 'id'},
-            {data: 'nombre'},
-            {data: 'precio'},
-            {data: 'categoria'},
+            {data: 'vehiculo_id'},
+            {data: 'usuario_id'},
+            {data: 'fecha_Prestamo'},
+            {data: 'fecha_devolucion'},
             {data: 'action', orderable: false},
         ],
         fnDrawCallback: function (oSettings) {
             enlazarEventos(oSettings)
         },
         deferRender: true,
-        retrive: true,
+        retrieve: true,
         processing: true,
         language: {
             sProcessing: 'Procesando...',

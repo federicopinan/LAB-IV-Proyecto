@@ -1,4 +1,4 @@
-import {usuariosServices} from '../../servicios/usuarios-servicios.js'
+import {usuariosServicio} from '../../servicios/usuarios-servicios.js'
 import {newRegister} from './new.js'
 import {editRegister} from './new.js'
 
@@ -19,10 +19,9 @@ const htmlUsuarios = `<div class="card">
        <thead>
            <tr>
            <th># </th>
-           <th>Apellido</th>
            <th>Nombre</th>
-           <th>Correo</th>
-           <th>Ciudad</th>
+           <th>Email</th>
+           <th>Rol</th>
            <th>Acciones</th>
            </tr>
        </thead>
@@ -41,7 +40,7 @@ export async function Usuarios() {
     d.querySelector('.rutaMenu').setAttribute('href', '#/usuarios')
     let cP = d.getElementById('contenidoPrincipal')
 
-    res = await usuariosServices.listar()
+    res = await usuariosServicio.listar()
     res.forEach(element => {
         element.action =
             "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarUsuario'  href='#/editUsuario' data-idUsuario='" +
@@ -74,12 +73,13 @@ function agregar() {
     newRegister()
 }
 function editar() {
-    let id = this.getAttribute('data-idUsuario')
+    let id = parseInt(this.getAttribute('data-idUsuario'), 10)
+
     editRegister(id)
 }
 
 async function borrar() {
-    let id = this.getAttribute('data-idUsuario')
+    let id = parseInt(this.getAttribute('data-idUsuario'), 10)
     let borrar = 0
     await Swal.fire({
         title: 'Está seguro que desea eliminar el registro?',
@@ -97,7 +97,7 @@ async function borrar() {
             Swal.fire('Se canceló la eliminación', '', 'info')
         }
     })
-    if (borrar === 1) await usuariosServices.borrar(id)
+    if (borrar === 1) await usuariosServicio.borrar(id)
     window.location.href = '#/usuarios'
 }
 
@@ -107,10 +107,9 @@ function llenarTabla(res) {
         data: res,
         columns: [
             {data: 'id'},
-            {data: 'apellido'},
             {data: 'nombre'},
-            {data: 'correo'},
-            {data: 'ciudad'},
+            {data: 'email'},
+            {data: 'rol'},
             {data: 'action', orderable: false},
         ],
         fnDrawCallback: function (oSettings) {

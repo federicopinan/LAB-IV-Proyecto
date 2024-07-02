@@ -21,10 +21,10 @@ app.add_middleware(
     allow_headers=["*"],#* Habilitamos encabezados para enviar desde un navegador.
 )
 #! Routers de las entidades
+app.include_router(usuario_router)
 app.include_router(categoria_router)
 app.include_router(libro_router)
 app.include_router(prestamo_router)
-app.include_router(usuario_router)
 
 app.add_middleware(ErrorHandler)
 
@@ -32,12 +32,11 @@ app.add_middleware(ErrorHandler)
 Base.metadata.create_all(bind=engine)
 
 #! Endpoint raíz de prueba
-@app.get('/', tags=['home'])
+@app.get('/', tags=['Home'])
 def message():
     return HTMLResponse('<h1>Hello world</h1>')
 
 
 import uvicorn 
-
 if __name__ == "__main__":
-	uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run("main:app", host="127.0.0.1", port=3000, reload=True)

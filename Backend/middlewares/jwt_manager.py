@@ -1,6 +1,6 @@
 from fastapi.security import HTTPBearer
 from fastapi import Request, HTTPException
-from services.usuario import UsuarioService
+from services.usuario import UsuarioServicio
 from utils.jwt_manager import create_token, validate_token
 from models.usuario import Usuario as UsuarioModel
 from config.database import Session
@@ -17,7 +17,7 @@ class JWTBearer(HTTPBearer):
         auth = await super().__call__(request)
         data = validate_token(auth.credentials)
         db = Session()
-        usuariosDb: UsuarioModel = UsuarioService(db).get_usuarios()
+        usuariosDb: UsuarioModel = UsuarioServicio(db).get_usuarios()
         for item in usuariosDb:
             if item.email == data['email']:
                 return

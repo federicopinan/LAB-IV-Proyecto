@@ -1,6 +1,6 @@
-import {usuariosServices} from '../../servicios/usuarios-servicios.js'
-import {ventasServices} from '../../servicios/ventas-servicios.js'
-import {productosServices} from '../../servicios/productos-servicios.js'
+import {usuariosServicio} from '/Frontend/servicios/usuarios-servicios.js'
+import {librosServices} from '/Frontend/servicios/libros-servicios.js'
+import {prestamoServices} from '/Frontend/servicios/prestamos-servicios.js'
 const htmlHome = ` <div class="row" >
     <div class="col-lg-3 col-6">
         <!-- small box -->
@@ -105,19 +105,19 @@ export async function Home() {
     let indUsuarios = d.getElementById('indUsuarios')
     let indProductos = d.getElementById('indProductos')
 
-    res = await usuariosServices.listar()
+    res = await usuariosServicio.listar()
     //CANTIDAD DE USUARIOS
     indUsuarios.innerHTML = res.length
 
     //CANTIDAD DE VENTAS
-    res = await ventasServices.listar()
+    res = await librosServices.listar()
     indVentas.innerHTML = res.length
 
     //CANTIDAD DE VENTAS SIN DESPACHAR (los valores que espera para el campo despachado son true y false)
-    res = await ventasServices.listarVentasDespachadas(false)
+    res = await librosServices.listarVentasDespachadas(false)
     indSinDespachar.innerHTML = res.length
 
     //CANTIDAD DE PRODUCTOS
-    res = await productosServices.listar()
+    res = await prestamoServices.listar()
     indProductos.innerHTML = res.length
 }

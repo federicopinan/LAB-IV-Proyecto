@@ -1,35 +1,57 @@
-from pydantic import BaseModel, EmailStr, Field, validator
-from enum import Enum
-
-# class RolEnum(str, Enum):
-#     bibliotecario = "Bibliotecario"
-#     cliente = "Cliente"
-#! Creamos el esquema de Usuario
-class Usuario(BaseModel):
-    id: int|None=None
-    nombre: str = Field(..., min_length=1, max_length=50)
+from pydantic import BaseModel, Field, EmailStr, field_validator, SecretStr, ConfigDict
+from fastapi import status
+from typing import Optional, List
+from fastapi.exceptions import HTTPException
+    
+class UsuarioAuth(BaseModel):
     email: EmailStr
-    contrasena: str = Field(None, min_length=6, max_length=100)
-    rol:str
+    password: str
+
+# class Id(BaseModel):
+#     id: int = Field(gt=0, le=1000)
+    
+#     def id_duplicado(objeto, lista:List):
+#         for item in lista:
+#                 if item.id == objeto.id :
+#                     raise HTTPException(status_code = status.HTTP_409_CONFLICT, detail = (f"El id ya se encuentra registrado."))
 
 
-# class UsuarioCreate(UsuarioBase):
-#     contrasena: str = Field(..., min_length=6, max_length=100)
-#     rol: RolEnum
 
-#     @validator('rol')
-#     def validate_rol(cls, v):
-#         if v not in RolEnum:
-#             raise ValueError('El rol debe ser Bibliotecario o Cliente')
-#         return v
+class Usuario(BaseModel):
+    id: Optional[int] = None
+    nombre:str = Field(min_length=2, max_length=50)
+    email: EmailStr
+    password: SecretStr = Field(min_length=8)
+    rol: str = Field(default="2")
+    
+    model_config = ConfigDict(from_attributes=True)
 
-# class UsuarioUpdate(UsuarioBase):
-#     contrasena: str = Field(None, min_length=6, max_length=100)
-#     rol: RolEnum
 
-# class Usuario(UsuarioBase):
-#     id: int
-#     rol: RolEnum
+    # @field_validator('password')
+    # def validar_password(cls, password: SecretStr) -> SecretStr:
+    #     password_str = password.get_secret_value()
 
-class Config:
-    orm_mode = True
+    #     numeros = '0123456789'
+    #     mayusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    #     minusculas = 'abcdefghijklmnopqrstuvwxyz'
+
+    #     if not any(char in numeros for char in password_str):
+    #         raise HTTPException(
+    #             status_code=status.HTTP_417_EXPECTATION_FAILED,
+    #             detail="El password debe contener al menos un número (0-9)."
+    #         )
+        
+    #     if not any(char in mayusculas for char in password_str):
+    #         raise HTTPException(
+    #             status_code=status.HTTP_417_EXPECTATION_FAILED,
+    #             detail="El password debe contener al menos una letra mayúscula (A-Z)."
+    #         )
+        
+    #     if not any(char in minusculas for char in password_str):
+    #         raise HTTPException(
+    #             status_code=status.HTTP_417_EXPECTATION_FAILED,
+    #             detail="El password debe contener al menos una letra minúscula (a-z)."
+    #         )
+
+    #     return password
+    

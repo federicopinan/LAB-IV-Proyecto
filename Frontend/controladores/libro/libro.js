@@ -1,26 +1,31 @@
-import {categoriasServices} from '../../servicios/categorias-servicios.js'
-import {newRegister} from './new.js'
-import {editRegister} from './new.js'
+import {librosServices} from '../../servicios/libros-servicios.js'
+import {newLibro} from './new.js'
+import {editlibro} from './new.js'
 
 var dtable
 
-const htmlCategorias = `<div class="card">
+const htmllibros = `
+<div class="card">
    <div class="card-header">
    
    <h3 class="card-title"> 
-       <a class="btn bg-dark btn-sm btnAgregarCategoria" href="#/newCategoria">Agregar Categoría</a>
+       <a class="btn bg-dark btn-sm btnAgregarlibros" href="#/newlibros">Agregar Vehículo</a>
    </h3>
 
    </div>
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="categoriasTable" class="table table-bordered table-striped tableCategoria" width="100%">
+   <table id="librossTable" class="table table-bordered table-striped tablelibros" width="100%">
        <thead>
            <tr>
            <th># </th>
-           <th>Nombre</th>
-           <th>Descripción</th>
+           <th>Modelo</th>
+           <th>Marca</th>
+           <th>Año</th>
+           <th>Matrícula</th>
+           <th>Categoría ID</th>
+           <th>Capacidad</th>
            <th>Acciones</th>
            </tr>
        </thead>
@@ -30,38 +35,38 @@ const htmlCategorias = `<div class="card">
    <!-- /.card-body -->
 </div> `
 
-export async function Categorias() {
+export async function libros() {
     let d = document
     let res = ''
-    d.querySelector('.contenidoTitulo').innerHTML = 'Categorias'
+    d.querySelector('.contenidoTitulo').innerHTML = 'libross'
     d.querySelector('.contenidoTituloSec').innerHTML = ''
-    d.querySelector('.rutaMenu').innerHTML = 'Categorias'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/categorias')
+    d.querySelector('.rutaMenu').innerHTML = 'libross'
+    d.querySelector('.rutaMenu').setAttribute('href', '#/libross')
     let cP = d.getElementById('contenidoPrincipal')
 
-    res = await categoriasServices.listar()
+    res = await librosServices.listar()
     res.forEach(element => {
         element.action =
-            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarCategoria'  href='#/editCategoria' data-idCategoria='" +
+            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarlibros'  href='#/editlibros' data-id_libros='" +
             element.id +
-            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarCategoria'href='#/delCategoria' data-idCategoria='" +
+            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarlibros'href='#/dellibros' data-id_libros='" +
             element.id +
             "'><i class='fas fa-trash'></i></a></div>"
     })
 
-    cP.innerHTML = htmlCategorias
+    cP.innerHTML = htmllibross
 
     llenarTabla(res)
 
-    let btnAgregar = d.querySelector('.btnAgregarCategoria')
+    let btnAgregar = d.querySelector('.btnAgregarlibros')
 
     btnAgregar.addEventListener('click', agregar)
 }
 
 function enlazarEventos(oSettings) {
     let d = document
-    let btnEditar = d.querySelectorAll('.btnEditarCategoria')
-    let btnBorrar = d.querySelectorAll('.btnBorrarCategoria')
+    let btnEditar = d.querySelectorAll('.btnEditarlibros')
+    let btnBorrar = d.querySelectorAll('.btnBorrarlibros')
     for (let i = 0; i < btnEditar.length; i++) {
         btnEditar[i].addEventListener('click', editar)
         btnBorrar[i].addEventListener('click', borrar)
@@ -69,26 +74,24 @@ function enlazarEventos(oSettings) {
 }
 
 function agregar() {
-    newRegister()
+    newLibro()
 }
-function editar() {
-    let id = parseInt(this.getAttribute('data-idCategoria'), 10)
 
-    editRegister(id)
+function editar() {
+    let id = parseInt(this.getAttribute('data-id_libros'), 10)
+    editlibro(id)
 }
 
 async function borrar() {
-    let id = parseInt(this.getAttribute('data-idCategoria'), 10)
+    let id = parseInt(this.getAttribute('data-id_libros'), 10)
     let borrar = 0
     await Swal.fire({
-        title: 'Está seguro que desea eliminar el registro?',
+        title: 'Está seguro que desea eliminar el libro?',
         showDenyButton: true,
         confirmButtonText: 'Si',
         denyButtonText: `Cancelar`,
-
         focusDeny: true,
     }).then(result => {
-        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             borrar = 1
         } else if (result.isDenied) {
@@ -96,25 +99,28 @@ async function borrar() {
             Swal.fire('Se canceló la eliminación', '', 'info')
         }
     })
-    if (borrar === 1) await categoriasServices.borrar(id)
-    window.location.href = '#/categorias'
+    if (borrar === 1) await librosServices.borrar(id)
+    window.location.href = '#/libros'
 }
 
 function llenarTabla(res) {
-    dtable = new DataTable('#categoriasTable', {
+    dtable = new DataTable('#librossTable', {
         responsive: true,
         data: res,
         columns: [
             {data: 'id'},
-            {data: 'nombre'},
-            {data: 'descripcion'},
-            {data: 'action', orderable: false},
+            {data: 'titulo'},
+            {data: 'autor'},
+            {data: 'isbn'},
+            {data: 'editorial'},
+            {data: 'disponible'},
+            {data: 'categoria_id'},
         ],
         fnDrawCallback: function (oSettings) {
             enlazarEventos(oSettings)
         },
         deferRender: true,
-        retrive: true,
+        retrieve: true,
         processing: true,
         language: {
             sProcessing: 'Procesando...',
