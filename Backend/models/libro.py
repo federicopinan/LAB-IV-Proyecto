@@ -14,5 +14,5 @@ class Libro(Base):
     disponible = Column(Boolean,default=True)
     categoria_id = Column(Integer, ForeignKey('Categoria.id'), nullable=False)
 
-    # categoria = relationship("Categoria", back_populates="Libro")
+    #categoria = relationship("Categoria", back_populates="Libro")
     # prestamos = relationship("Prestamo", back_populates="Libro")
