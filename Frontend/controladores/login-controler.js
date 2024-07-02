@@ -2,7 +2,7 @@ var inputEmail = null
 var inputPassword = null
 var frmLogin = null
 
-import {usuariosServices} from '/Frontend/servicios/usuarios-servicios.js'
+import {usuariosServicio} from '/Frontend/servicios/usuarios-servicios.js'
 
 /* document.addEventListener('DOMContentLoaded', () => {
      
@@ -60,25 +60,35 @@ async function usuarioExiste() {
     let usuarioId
     const spinner = document.querySelector('#spinner')
 
-    await usuariosServices
-        .listar()
+    /* await usuariosServicio.listar( )
         .then(respuesta => {
             respuesta.forEach(usuario => {
-                if (
-                    usuario.correo === inputEmail.value &&
-                    usuario.password === inputPassword.value
-                ) {
-                    usuarioId = usuario.id
-                    usuarioActivo = usuario.nombre + ' ' + usuario.apellido
-                    usuarioFoto = usuario.avatar
-                    return (existeUsuario = true)
+                
+                if (usuario.correo === inputEmail.value && usuario.password === inputPassword.value) {
+                    usuarioId = usuario.id;
+                    usuarioActivo = usuario.nombre;
+                    usuarioFoto = usuario.avatar;
+                    return existeUsuario = true;
                 } else {
-                    return
+                    return;
                 }
-            })
+            });
         })
-        .catch(error => console.log(error))
-
+        .catch(error => console.log(error)); */
+    await usuariosServicio
+        .login(inputEmail.value, inputPassword.value)
+        .then(respuesta => {
+            if (respuesta.accesoOk == true) {
+                existeUsuario = true
+                let cad = respuesta.token
+                localStorage.setItem('token', cad)
+                usuarioId = respuesta.usuario.id
+                usuarioActivo = respuesta.usuario.nombre
+                usuarioFoto = respuesta.usuario.avatar
+            } else {
+                existeUsuario = false
+            }
+        })
     if (!existeUsuario) {
         mostrarMensaje('Email o contraseña incorrecto, intenta nuevamente')
     } else {

@@ -14,7 +14,7 @@ class Usuario(Base):
     id = Column(Integer,autoincrement=True, primary_key=True)
     nombre = Column(String(30), nullable=False)
     email = Column(String(30), unique=True, index=True, nullable=False)
-    contrasena = Column(String(30), nullable=False)
+    password = Column(String(128), nullable=False)
     rol = Column(Enum("Bibliotecario","Cliente"), nullable=False)
 
     # prestamos = relationship("Prestamo", back_populates="usuario")

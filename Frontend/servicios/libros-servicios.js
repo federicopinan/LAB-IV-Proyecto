@@ -1,11 +1,10 @@
-const url = 'http://127.0.0.1:8000/categorias'
+const url = 'http://127.0.0.1:8000/libros'
 
 async function listar(id) {
     let cadUrl
     if (isNaN(id)) cadUrl = url
     else cadUrl = url + '/' + id
     return await fetch(cadUrl, {
-        method: 'GET', //agregue methood
         headers: {
             accept: 'application/json',
             'Content-type': 'application/json',
@@ -14,54 +13,62 @@ async function listar(id) {
     }).then(respuesta => respuesta.json())
 }
 
-async function crear(nombre, descripcion) {
-    console.log(nombre, descripcion) //agregue id, nombre, descrip
+async function crear(titulo, autor, isbn, editorial, disponible, categoria_id) {
     return await fetch(url, {
         method: 'POST',
         headers: {
-            accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('token'), //agregue autho...
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify({
-            nombre: nombre, //agregado
-            descripcion: descripcion,
+            titulo: titulo,
+            autor: autor,
+            isbn: isbn,
+            editorial: editorial,
+            disponible: disponible,
+            categoria_id: categoria_id,
         }),
     }).then(respuesta => respuesta.json())
 }
 
-async function editar(id, nombre, descripcion) {
-    //agregue nombre
-
+async function editar(
+    id,
+    titulo,
+    autor,
+    isbn,
+    editorial,
+    disponible,
+    categoria_id
+) {
     let urlPut = url + '/' + id
     return await fetch(urlPut, {
         method: 'PUT',
         headers: {
-            accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + localStorage.getItem('token'), //agregado
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify({
-            id: id, // agregado
-            nombre: nombre, // agregado
-            descripcion: descripcion,
+            titulo: titulo,
+            autor: autor,
+            isbn: isbn,
+            editorial: editorial,
+            disponible: disponible,
+            categoria_id: categoria_id,
         }),
     }).then(respuesta => respuesta.json())
 }
 
 async function borrar(id) {
-    let urlPut = url + '/' + id
-    return await fetch(urlPut, {
+    let urlDelete = url + '/' + id
+    return await fetch(urlDelete, {
         method: 'DELETE',
         headers: {
-            accept: 'application/json',
-            'Content-Type': 'application/json', //agregado
-            Authorization: 'Bearer ' + localStorage.getItem('token'), //agregado
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
     }).then(respuesta => respuesta.json())
 }
 
-export const categoriasServices = {
+export const librosServices = {
     listar,
     crear,
     editar,

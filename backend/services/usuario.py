@@ -1,34 +1,41 @@
-from models.usuario import Usuario as usuariosModel
-from schemas.usuario import  Usuario as  userSchema
+from models.usuario import Usuario as UsuarioModel
+from schemas.usuario import Usuario
 
-#! Funciones CRUD para los endpoints del router Usuario
+
 class UsuarioServicio():
-    def __init__(self,db) -> None:
-        self.db=db
+    
+    def __init__(self, db) -> None:
+        self.db = db
 
-    def get_users(self):
-        result=self.db.query(usuariosModel).all()
+    def get_usuarios(self):
+        result = self.db.query(UsuarioModel).all()
         return result
 
-    def get_user(self,id):
-        result = self.db.query(usuariosModel).filter(usuariosModel.id == id).first()
-        return result 
+    def get_usuario(self, id):
+        result = self.db.query(UsuarioModel).filter(UsuarioModel.id == id).first()
+        return result
 
-    def create_user(self,user:userSchema):
-        new_user= usuariosModel(**user.dict())
-        self.db.add(new_user)
+    def get_usuario_by_email(self, email):
+        result = self.db.query(UsuarioModel).filter(UsuarioModel.email == email).all()
+        return result
+
+    def create_usuario(self, usuario: Usuario):
+        new_usuario = UsuarioModel(**usuario.model_dump())
+        self.db.add(new_usuario)
         self.db.commit()
         return
 
-    def update_user(self, id: int, data: userSchema):
-        usuario=self.db.query(usuariosModel).filter(usuariosModel.id==id).first()
-        usuario.nombre=data.nombre
-        usuario.email=data.email
-        usuario.contrasena=data.contrasena
+    def update_usuario(self, id: int, data: Usuario):
+        usuario = self.db.query(UsuarioModel).filter(UsuarioModel.id == id).first()
+        usuario.id = data.id
+        usuario.nombre = data.nombre
+        usuario.email = data.email
+        usuario.password = data.password
+        usuario.rol = data.rol
         self.db.commit()
         return
 
-    def delete_user(self, id: int):
-        self.db.query(usuariosModel).filter(usuariosModel.id == id).delete()
-        self.db.commit()
-        return
+    def delete_usuario(self, id: int):
+       self.db.query(UsuarioModel).filter(UsuarioModel.id == id).delete()
+       self.db.commit()
+       return
