@@ -76,3 +76,10 @@ def GetBookByDisponibles()->List[LibroSchema]:
     db=Session()
     result=LibroServicio(db).get_libros_disponibles()
     return result
+
+
+@libro_router.get('/totallibrosdisponibles', tags=["Libros📚"], response_model=int, status_code=200, dependencies=[Depends(JWTBearer())])
+def get_total_librosdisponible() -> int:
+    db=Session()
+    result = LibroServicio(db).get_total_librosdisponibles()
+    return JSONResponse(status_code=200, content={"count": result})

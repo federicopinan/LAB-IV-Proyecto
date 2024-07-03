@@ -66,4 +66,8 @@ def Get_LoanHistory_ByUser(id:int) ->PrestamoSchema:
     return result
 
             
-                     
+@prestamo_router.get("/prestamos/totalprestamosactivos", tags=["Prestamos📂"], response_model=int, status_code=200, dependencies=[Depends(JWTBearer())])
+def Get_TotalActiveLoans() -> int:
+    db=Session()
+    result = PrestamoServicio(db).get_Total_prestamos_activos()
+    return result 

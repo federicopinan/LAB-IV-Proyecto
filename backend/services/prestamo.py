@@ -42,3 +42,6 @@ class PrestamoServicio():
     def get_historial_prestamos(self, usuario_id: int):
         return self.db.query(loanModel).filter(loanModel.usuario_id == usuario_id).all()
     
+
+    def get_Total_prestamos_activos(self):
+        return self.db.query(loanModel).filter(loanModel.fecha_devolucion == None,loanModel.fecha_prestamo != None).count()
