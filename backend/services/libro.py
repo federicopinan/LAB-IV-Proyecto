@@ -54,9 +54,9 @@ class LibroServicio():
         return result
 
     #Query para buscar el total de libros
-    def get_total_libros(db: Session):
+    def get_total_libros(self):
         now = datetime.now()
-        libros_sin_prestamo = db.query(booksmodel).outerjoin(Prestamo, booksmodel.id == Prestamo.libro_id).filter(
-            or_(Prestamo.id == None, Prestamo.fecha_devolucion <= now)
+        libros_sin_prestamo = self.db.query(booksmodel).outerjoin(Prestamo, booksmodel.id == Prestamo.libro_id).filter(
+        or_(Prestamo.id == None, Prestamo.fecha_devolucion <= now)
         ).count()
         return libros_sin_prestamo

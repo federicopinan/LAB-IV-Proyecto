@@ -41,5 +41,6 @@ class UsuarioServicio():
        return
    
     #Query de ususarios registrados
-    def get_registered_users(self, db: Session):
-        return self.db.query(UsuarioModel).count()
+    def get_registered_users(self):
+        result=self.db.query(UsuarioModel).count()
+        return result

@@ -100,3 +100,10 @@ def delete_usuario(id: int)-> dict:
         return JSONResponse(status_code=404, content={"message": "No se encontró el usuario."})
     UsuarioServicio(db).delete_usuario(id)
     return JSONResponse(status_code=200, content={"message": "Se ha eliminado el usuario con éxito."})
+
+
+@usuario_router.get('/usuarios/', tags=["Usuarios😐"], response_model=dict, status_code=200,dependencies=[Depends(JWTBearer())])
+def get_registered_users()-> List[Usuario]:
+    db=Session()
+    result = UsuarioServicio(db).get_registered_users()
+    return JSONResponse(status_code=200, content=jsonable_encoder(result))

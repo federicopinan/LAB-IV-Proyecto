@@ -1,5 +1,5 @@
-from models.categoria import categoryModel as categoryModel
-from schemas.categoria import categoryModel as categorySchema
+from models.categoria import Categoria as categoryModel
+from schemas.categoria import Categoria as categorySchema
 from models.prestamo import Prestamo 
 from models.libro import Libro as booksmodel
 
@@ -36,12 +36,11 @@ class CategoriaServicio():
         return
     
     #Query para mostrar la categoria más popular
-    def get_categoria_mas_popular(db: Session):
-        return db.query(
-            categoria.nombre,
-            func.count(Prestamo.id).label("total")
+    def get_categoria_mas_popular(self):
+        return self.db.query(
+            categoryModel.nombre,function.count(Prestamo.id).label("total")
         ).join(booksmodel, categoryModel.id == booksmodel.categoria_id
         ).join(Prestamo, booksmodel.id == Prestamo.libro_id
         ).group_by(categoryModel.id
-        ).order_by(func.count(Prestamo.id).desc()
+        ).order_by(function.count(Prestamo.id).desc()
         ).first()
