@@ -1,30 +1,29 @@
-import {librosServices} from '/Frontend/servicios/libros-servicios.js'
-import {prestamoServices} from '/Frontend/servicios/prestamos-servicios.js'
+import {librosServices} from '../../servicios/libros-servicios.js'
 
-const htmlAmProductos = `
+const htmlAmLibros = `
 <div class="card card-dark card-outline">
-
-	<form  class="needs-validation frmAmProducto"  enctype="multipart/form-data">
+	
+	<form  class="needs-validation frmAmLibro"  enctype="multipart/form-data">
 	
 		<div class="card-header">
                
 			<div class="col-md-8 offset-md-2">	
                
 				<!--=====================================
-                Nombre
+                Autor
                 ======================================-->
 				
 				<div class="form-group mt-5">
 					
-					<label>Nombre</label>
+					<label>Autor</label>
 
 					<input 
 					type="text" 
 					class="form-control"
-					
-					onchange="validateJS(event,'t&n')"
-					name="nombre"
-                    id="productoNombre"
+					pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9 ]{1,}"
+					onchange="validateJS(event,'text')"
+					name="Autor"
+                    id="libroTitulo"
 					required>
 
 					<div class="valid-feedback">Valid.</div>
@@ -33,19 +32,20 @@ const htmlAmProductos = `
 				</div>
 
 				<!--=====================================
-                Descripcion
+                Marca
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Descripcion</label>
+					<label>Marca</label>
 
-					<textarea 
+					<input 
+					type="text" 
 					class="form-control"
 					onchange="validateJS(event,'text')"
-					name="descripcion"
-                    id="productoDescripcion"
-					required></textarea>
+					name="titulo"
+                    id="libroTitulo"
+					required>
 
 					<div class="valid-feedback">Valid.</div>
             		<div class="invalid-feedback">Please fill out this field.</div>
@@ -53,57 +53,19 @@ const htmlAmProductos = `
 				</div>
 
 				<!--=====================================
-                Foto
+                Año
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Foto</label>
-			
-					<label for="customFile" class="d-flex justify-content-center">
-						
-						<figure class="text-center py-3">
-							
-							<img src="../../img/usuarios/default/anonymous.png" class="img-fluid  changePicture" style="width:150px">
-
-						</figure>
-
-					</label>
-
-					<div class="custom-file">
-						
-						<input 
-						type="file" 
-						id="customFile" 
-						class="custom-file-input"
-						accept="image/*"
-						onchange="validateImageJS(event,'changePicture')"
-						name="picture"
-                       	>
-
-						<div class="valid-feedback">Valid.</div>
-            			<div class="invalid-feedback">Please fill out this field.</div>
-
-						<label for="customFile" class="custom-file-label">Elegir imágen</label>
-
-					</div>
-
-				</div>
-
-                <!--=====================================
-                Precio
-                ======================================-->
-				
-				<div class="form-group mt-5">
-					
-					<label>Precio</label>
+					<label>Año</label>
 
 					<input 
 					type="number" 
-                    step="0.01"
 					class="form-control"
-					name="precio"
-                    id="productoPrecio"
+					onchange="validateJS(event,'text')"
+					name="isbn"
+                    id="libroIsbn"
 					required>
 
 					<div class="valid-feedback">Valid.</div>
@@ -112,29 +74,70 @@ const htmlAmProductos = `
 				</div>
 
 				<!--=====================================
-                País
+                Matrícula
                 ======================================-->
 
-             	<div class="form-group mt-2">
+				<div class="form-group mt-2">
 					
-					<label>Categoria</label>
-				
+					<label>Matrícula</label>
 
-					<select class="form-control select2" name="categoria" id="productoCategoria" required>
-						<option value="">Seleccionar Categoría</option>
-						
-					</select>
+					<input 
+					type="text" 
+					class="form-control"
+					onchange="validateJS(event,'text')"
+					name="editorial"
+                    id="libroEditorial"
+					required>
 
 					<div class="valid-feedback">Valid.</div>
             		<div class="invalid-feedback">Please fill out this field.</div>
 
-				</div>  
+				</div>
 
-				
+				<!--=====================================
+                Categoría ID
+                ======================================-->
+
+				<div class="form-group mt-2">
+					
+					<label>Categoría ID</label>
+
+					<input 
+					type="number" 
+					class="form-control"
+					onchange="validateJS(event,'text')"
+					name="disponible"
+                    id="libroDisponible"
+					required>
+
+					<div class="valid-feedback">Valid.</div>
+            		<div class="invalid-feedback">Please fill out this field.</div>
+
+				</div>
+
+				<!--=====================================
+                Capacidad
+                ======================================-->
+
+				<div class="form-group mt-2">
+					
+					<label>Capacidad</label>
+
+					<input 
+					type="number" 
+					class="form-control"
+					onchange="validateJS(event,'text')"
+					name="categoria_id"
+                    id="liborCategoria_id"
+					required>
+
+					<div class="valid-feedback">Valid.</div>
+            		<div class="invalid-feedback">Please fill out this field.</div>
+
+				</div>
 			
 			</div>
 		
-
 		</div>
 
 		<div class="card-footer">
@@ -143,7 +146,7 @@ const htmlAmProductos = `
 	
 				<div class="form-group mt-3">
 
-					<a href="#/productos" class="btn btn-light border text-left">Cancelar</a>
+					<a href="#/libro" class="btn btn-light border text-left">Cancelar</a>
 					
 					<button type="submit" class="btn bg-dark float-right">Guardar</button>
 
@@ -153,118 +156,112 @@ const htmlAmProductos = `
 
 		</div>
 
-
 	</form>
 
-
 </div> `
+
 var formulario = ''
-
-var txtNombre = ''
-var txtDescripcion = ''
-var fileFoto = ''
-var selCategoria = ''
-var txtPrecio = ''
-
-var idProducto
+var txtTitulo = ''
+var txtAutor = ''
+var txtIsbn = ''
+var txtEditorial = ''
+var txtDisponble = ''
+var txtCategoria_id = ''
+let Id_libro = 0
 
 export async function newLibro() {
     let d = document
 
-    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Producto'
+    d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Libro'
     d.querySelector('.contenidoTituloSec').innerHTML += 'Agregar'
+
     crearFormulario()
 
-    formulario = d.querySelector('.frmAmProducto')
+    formulario = d.querySelector('.frmAmLibro')
     formulario.addEventListener('submit', guardar)
 }
 
-export async function editlibro(id) {
+export async function editLibro(id) {
     let d = document
-    idProducto = id
-    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Producto'
+    Id_libro = id
+    d.querySelector('.contenidoTitulo').innerHTML = 'Editar Libro'
     d.querySelector('.contenidoTituloSec').innerHTML += 'Editar'
     crearFormulario()
 
-    formulario = d.querySelector('.frmAmProducto')
+    formulario = d.querySelector('.frmAmLibro')
     formulario.addEventListener('submit', modificar)
-    let producto = await productosServices.listar(id)
+    let libro = await librosServices.listar(id)
 
-    txtDescripcion.value = producto.descripcion
-    txtNombre.value = producto.nombre
-
-    if (producto.foto.length > 0) fileFoto.src = producto.foto
-    selCategoria.value = producto.idCategoria
-    txtPrecio.value = producto.precio
+    txtTitulo.value = libro.titulo
+    txtAutor.value = libro.Autor
+    txtIsbn.value = libro.isbn
+    txtEditorial.value = libro.editorial
+    txtDisponble.value = libro.disponible
+    txtCategoria_id.value = libro.categoria_id
 }
 
-async function crearFormulario() {
+function crearFormulario() {
     let d = document
-    d.querySelector('.rutaMenu').innerHTML = 'Productos'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/productos')
+    d.querySelector('.rutaMenu').innerHTML = 'Libros'
+    d.querySelector('.rutaMenu').setAttribute('href', '#/libro')
 
     let cP = d.getElementById('contenidoPrincipal')
-    cP.innerHTML = htmlAmProductos
+    cP.innerHTML = htmlAmLibros
 
     var script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = '../controladores/validaciones.js'
     cP.appendChild(script)
 
-    txtDescripcion = d.getElementById('productoDescripcion')
-    txtNombre = d.getElementById('productoNombre')
-    fileFoto = d.querySelector('.changePicture')
-    txtPrecio = d.getElementById('productoPrecio')
-    selCategoria = d.getElementById('productoCategoria')
-
-    /*Cargar categorías en select*/
-    let res = await librosServices.listar()
-    res.forEach(element => {
-        let opcion = d.createElement('option')
-        opcion.value = element.id
-        opcion.text = element.descripcion
-        selCategoria.appendChild(opcion)
-    })
+    txtTitulo = d.getElementById('libroTitulo')
+    txtAutor = d.getElementById('libroTitulo')
+    txtIsbn = d.getElementById('libroIsbn')
+    txtEditorial = d.getElementById('libroEditorial')
+    txtDisponble = d.getElementById('libroDisponible')
+    txtCategoria_id = d.getElementById('liborCategoria_id')
 }
 
 function guardar(e) {
     e.preventDefault()
+    const formData = new FormData(e?.target)
+    const values = Object.fromEntries(formData)
+    console.log(values)
 
-    var categoria = selCategoria.options[selCategoria.selectedIndex]
-
-    prestamoServices
+    // No incluir 'id' en la solicitud de creación
+    librosServices
         .crear(
-            txtNombre.value,
-            txtDescripcion.value,
-            fileFoto.src,
-            txtPrecio.value,
-            categoria.value,
-            categoria.text
+            values.Autor,
+            values.titulo,
+            values.disponible,
+            values.isbn,
+            values.editorial,
+            values.categoria_id
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/productos'
+            window.location.href = '#/libro'
         })
         .catch(error => console.log(error))
 }
 
 function modificar(e) {
     e.preventDefault()
+    const formData = new FormData(e?.target)
+    const values = Object.fromEntries(formData)
 
-    var categoria = selCategoria.options[selCategoria.selectedIndex]
-    productosServices
+    librosServices
         .editar(
-            idProducto,
-            txtNombre.value,
-            txtDescripcion.value,
-            fileFoto.src,
-            txtPrecio.value,
-            categoria.value,
-            categoria.text
+            Id_libro,
+            values.Autor,
+            values.titulo,
+            values.disponible,
+            values.isbn,
+            values.editorial,
+            values.categoria_id
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/productos'
+            window.location.href = '#/libro'
         })
         .catch(error => console.log(error))
 }

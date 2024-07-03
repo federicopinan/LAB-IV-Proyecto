@@ -18,7 +18,7 @@ const htmlPrestamos = `
        <thead>
            <tr>
            <th># </th>
-           <th>Vehículo ID</th>
+           <th>Libro ID</th>
            <th>Usuario ID</th>
            <th>Fecha Prestamo</th>
            <th>Fecha Devolución</th>

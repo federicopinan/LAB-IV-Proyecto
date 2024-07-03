@@ -10,7 +10,7 @@ from services.prestamo import PrestamoServicio
 from schemas.prestamo import Prestamo as PrestamoSchema
 from middlewares.jwt_manager import JWTBearer
 
-prestamo_router = APIRouter()
+prestamo_router = APIRouter() 
 
 @prestamo_router.get('/prestamos', tags=["Prestamos📂"],response_model=List[PrestamoSchema])#,dependencies=[Depends(JWTBearer())])
 def get_loans()-> List[PrestamoSchema]:

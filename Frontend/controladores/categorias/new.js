@@ -80,7 +80,7 @@ var txtNombre = ''
 var txtDescripcion = ''
 let catId = 0
 
-export async function newRegister() {
+export async function newCategoria() {
     let d = document
 
     d.querySelector('.contenidoTitulo').innerHTML = 'Agregar Categoría'
@@ -92,7 +92,7 @@ export async function newRegister() {
     formulario.addEventListener('submit', guardar)
 }
 
-export async function editRegister(id) {
+export async function editCategoria(id) {
     let d = document
     catId = id
     d.querySelector('.contenidoTitulo').innerHTML = 'Editar Categoría'

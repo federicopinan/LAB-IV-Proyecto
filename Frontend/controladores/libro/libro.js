@@ -1,7 +1,6 @@
 import {librosServices} from '../../servicios/libros-servicios.js'
 import {newLibro} from './new.js'
-import {editlibro} from './new.js'
-
+import {editLibro} from './new.js'
 var dtable
 
 const htmllibros = `
@@ -9,24 +8,22 @@ const htmllibros = `
    <div class="card-header">
    
    <h3 class="card-title"> 
-       <a class="btn bg-dark btn-sm btnAgregarlibros" href="#/newlibros">Agregar Vehículo</a>
+       <a class="btn bg-dark btn-sm btnAgregarlibro" href="#/newlibros">Agregar Vehículo</a>
    </h3>
 
    </div>
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="librossTable" class="table table-bordered table-striped tablelibros" width="100%">
+   <table id="librosTable" class="table table-bordered table-striped tablelibros" width="100%">
        <thead>
            <tr>
            <th># </th>
-           <th>Modelo</th>
-           <th>Marca</th>
-           <th>Año</th>
-           <th>Matrícula</th>
+           <th>Titulo</th>
+           <th>Autor</th>
+           <th>Editorial</th>
+           <th>Disponible</th>
            <th>Categoría ID</th>
-           <th>Capacidad</th>
-           <th>Acciones</th>
            </tr>
        </thead>
    
@@ -38,10 +35,10 @@ const htmllibros = `
 export async function libros() {
     let d = document
     let res = ''
-    d.querySelector('.contenidoTitulo').innerHTML = 'libross'
+    d.querySelector('.contenidoTitulo').innerHTML = 'Libros'
     d.querySelector('.contenidoTituloSec').innerHTML = ''
-    d.querySelector('.rutaMenu').innerHTML = 'libross'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/libross')
+    d.querySelector('.rutaMenu').innerHTML = 'Libros'
+    d.querySelector('.rutaMenu').setAttribute('href', '#/libros')
     let cP = d.getElementById('contenidoPrincipal')
 
     res = await librosServices.listar()
@@ -54,11 +51,11 @@ export async function libros() {
             "'><i class='fas fa-trash'></i></a></div>"
     })
 
-    cP.innerHTML = htmllibross
+    cP.innerHTML = htmllibros
 
     llenarTabla(res)
 
-    let btnAgregar = d.querySelector('.btnAgregarlibros')
+    let btnAgregar = d.querySelector('.btnAgregarlibro')
 
     btnAgregar.addEventListener('click', agregar)
 }
@@ -79,7 +76,7 @@ function agregar() {
 
 function editar() {
     let id = parseInt(this.getAttribute('data-id_libros'), 10)
-    editlibro(id)
+    editLibro(id)
 }
 
 async function borrar() {
@@ -104,7 +101,7 @@ async function borrar() {
 }
 
 function llenarTabla(res) {
-    dtable = new DataTable('#librossTable', {
+    dtable = new DataTable('#librosTable', {
         responsive: true,
         data: res,
         columns: [
@@ -115,6 +112,7 @@ function llenarTabla(res) {
             {data: 'editorial'},
             {data: 'disponible'},
             {data: 'categoria_id'},
+            {data: 'action', orderable: false},
         ],
         fnDrawCallback: function (oSettings) {
             enlazarEventos(oSettings)
