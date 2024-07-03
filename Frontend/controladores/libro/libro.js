@@ -1,29 +1,32 @@
 import {librosServices} from '../../servicios/libros-servicios.js'
 import {newLibro} from './new.js'
 import {editLibro} from './new.js'
+
 var dtable
 
-const htmllibros = `
+const htmlAmLibros = `
 <div class="card">
    <div class="card-header">
    
    <h3 class="card-title"> 
-       <a class="btn bg-dark btn-sm btnAgregarlibro" href="#/newlibros">Agregar Vehículo</a>
+       <a class="btn bg-dark btn-sm btnAgregarLibro" href="#/newLibro">Agregar Libro</a>
    </h3>
 
    </div>
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="librosTable" class="table table-bordered table-striped tablelibros" width="100%">
+   <table id="librosTable" class="table table-bordered table-striped tableVehiculo" width="100%">
        <thead>
            <tr>
            <th># </th>
            <th>Titulo</th>
            <th>Autor</th>
+           <th>Isbn</th>
            <th>Editorial</th>
            <th>Disponible</th>
            <th>Categoría ID</th>
+           <th>Acciones</th>
            </tr>
        </thead>
    
@@ -44,26 +47,26 @@ export async function libros() {
     res = await librosServices.listar()
     res.forEach(element => {
         element.action =
-            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarlibros'  href='#/editlibros' data-id_libros='" +
+            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarLibro'  href='#/editLibro' data-idLibro='" +
             element.id +
-            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarlibros'href='#/dellibros' data-id_libros='" +
+            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarLibro'href='#/delLibro' data-idLibro='" +
             element.id +
             "'><i class='fas fa-trash'></i></a></div>"
     })
 
-    cP.innerHTML = htmllibros
+    cP.innerHTML = htmlAmLibros
 
     llenarTabla(res)
 
-    let btnAgregar = d.querySelector('.btnAgregarlibro')
+    let btnAgregar = d.querySelector('.btnAgregarLibro')
 
     btnAgregar.addEventListener('click', agregar)
 }
 
 function enlazarEventos(oSettings) {
     let d = document
-    let btnEditar = d.querySelectorAll('.btnEditarlibros')
-    let btnBorrar = d.querySelectorAll('.btnBorrarlibros')
+    let btnEditar = d.querySelectorAll('.btnEditarLibro')
+    let btnBorrar = d.querySelectorAll('.btnBorrarLibro')
     for (let i = 0; i < btnEditar.length; i++) {
         btnEditar[i].addEventListener('click', editar)
         btnBorrar[i].addEventListener('click', borrar)
@@ -75,12 +78,12 @@ function agregar() {
 }
 
 function editar() {
-    let id = parseInt(this.getAttribute('data-id_libros'), 10)
+    let id = parseInt(this.getAttribute('data-idLibro'), 10)
     editLibro(id)
 }
 
 async function borrar() {
-    let id = parseInt(this.getAttribute('data-id_libros'), 10)
+    let id = parseInt(this.getAttribute('data-idLibro'), 10)
     let borrar = 0
     await Swal.fire({
         title: 'Está seguro que desea eliminar el libro?',

@@ -10,38 +10,17 @@ const htmlAmLibros = `
 			<div class="col-md-8 offset-md-2">	
                
 				<!--=====================================
-                Autor
+                a
                 ======================================-->
 				
 				<div class="form-group mt-5">
 					
-					<label>Autor</label>
+					<label>Titulo</label>
 
 					<input 
 					type="text" 
 					class="form-control"
 					pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9 ]{1,}"
-					onchange="validateJS(event,'text')"
-					name="Autor"
-                    id="libroTitulo"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Marca
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Marca</label>
-
-					<input 
-					type="text" 
-					class="form-control"
 					onchange="validateJS(event,'text')"
 					name="titulo"
                     id="libroTitulo"
@@ -53,12 +32,33 @@ const htmlAmLibros = `
 				</div>
 
 				<!--=====================================
-                Año
+                a
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Año</label>
+					<label>a</label>
+
+					<input 
+					type="text" 
+					class="form-control"
+					onchange="validateJS(event,'text')"
+					name="autor"
+                    id="libroAutor"
+					required>
+
+					<div class="valid-feedback">Valid.</div>
+            		<div class="invalid-feedback">Please fill out this field.</div>
+
+				</div>
+
+				<!--=====================================
+                Isbn
+                ======================================-->
+
+				<div class="form-group mt-2">
+					
+					<label>Isbn</label>
 
 					<input 
 					type="number" 
@@ -74,12 +74,12 @@ const htmlAmLibros = `
 				</div>
 
 				<!--=====================================
-                Matrícula
+                Editorial
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Matrícula</label>
+					<label>Editorial</label>
 
 					<input 
 					type="text" 
@@ -95,12 +95,12 @@ const htmlAmLibros = `
 				</div>
 
 				<!--=====================================
-                Categoría ID
+                Disponible
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Categoría ID</label>
+					<label>Disponible</label>
 
 					<input 
 					type="number" 
@@ -116,19 +116,19 @@ const htmlAmLibros = `
 				</div>
 
 				<!--=====================================
-                Capacidad
+                Categoria ID
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>Capacidad</label>
+					<label>Categoria ID</label>
 
 					<input 
 					type="number" 
 					class="form-control"
 					onchange="validateJS(event,'text')"
 					name="categoria_id"
-                    id="liborCategoria_id"
+                    id="libroCategoria_id"
 					required>
 
 					<div class="valid-feedback">Valid.</div>
@@ -146,7 +146,7 @@ const htmlAmLibros = `
 	
 				<div class="form-group mt-3">
 
-					<a href="#/libro" class="btn btn-light border text-left">Cancelar</a>
+					<a href="#/libros" class="btn btn-light border text-left">Cancelar</a>
 					
 					<button type="submit" class="btn bg-dark float-right">Guardar</button>
 
@@ -193,7 +193,7 @@ export async function editLibro(id) {
     let libro = await librosServices.listar(id)
 
     txtTitulo.value = libro.titulo
-    txtAutor.value = libro.Autor
+    txtAutor.value = libro.autor
     txtIsbn.value = libro.isbn
     txtEditorial.value = libro.editorial
     txtDisponble.value = libro.disponible
@@ -203,22 +203,22 @@ export async function editLibro(id) {
 function crearFormulario() {
     let d = document
     d.querySelector('.rutaMenu').innerHTML = 'Libros'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/libro')
+    d.querySelector('.rutaMenu').setAttribute('href', '#/libros')
 
     let cP = d.getElementById('contenidoPrincipal')
     cP.innerHTML = htmlAmLibros
 
     var script = document.createElement('script')
     script.type = 'text/javascript'
-    script.src = '../controladores/validaciones.js'
+    script.src = '/Frontend/controladores/validaciones.js'
     cP.appendChild(script)
 
     txtTitulo = d.getElementById('libroTitulo')
-    txtAutor = d.getElementById('libroTitulo')
+    txtAutor = d.getElementById('libroAutor')
     txtIsbn = d.getElementById('libroIsbn')
     txtEditorial = d.getElementById('libroEditorial')
     txtDisponble = d.getElementById('libroDisponible')
-    txtCategoria_id = d.getElementById('liborCategoria_id')
+    txtCategoria_id = d.getElementById('libroCategoria_id')
 }
 
 function guardar(e) {
@@ -230,8 +230,8 @@ function guardar(e) {
     // No incluir 'id' en la solicitud de creación
     librosServices
         .crear(
-            values.Autor,
             values.titulo,
+            values.autor,
             values.disponible,
             values.isbn,
             values.editorial,
@@ -239,7 +239,7 @@ function guardar(e) {
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/libro'
+            window.location.href = '#/libros'
         })
         .catch(error => console.log(error))
 }
@@ -252,8 +252,8 @@ function modificar(e) {
     librosServices
         .editar(
             Id_libro,
-            values.Autor,
             values.titulo,
+            values.autor,
             values.disponible,
             values.isbn,
             values.editorial,
@@ -261,7 +261,7 @@ function modificar(e) {
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/libro'
+            window.location.href = '#/libros'
         })
         .catch(error => console.log(error))
 }

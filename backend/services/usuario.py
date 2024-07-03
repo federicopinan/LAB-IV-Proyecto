@@ -1,6 +1,6 @@
 from models.usuario import Usuario as UsuarioModel
 from schemas.usuario import Usuario
-
+from config.database import Session
 
 class UsuarioServicio():
     

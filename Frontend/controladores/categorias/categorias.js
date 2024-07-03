@@ -1,6 +1,6 @@
 import {categoriasServices} from '../../servicios/categorias-servicios.js'
-import {newCategoria} from './new.js'
-import {editCategoria} from './new.js'
+import {newRegister} from './new.js'
+import {editRegister} from './new.js'
 
 var dtable
 
@@ -28,7 +28,7 @@ const htmlCategorias = `<div class="card">
    </table>
    </div>
    <!-- /.card-body -->
-</div>`
+</div> `
 
 export async function Categorias() {
     let d = document
@@ -39,26 +39,15 @@ export async function Categorias() {
     d.querySelector('.rutaMenu').setAttribute('href', '#/categorias')
     let cP = d.getElementById('contenidoPrincipal')
 
-    try {
-        res = await categoriasServices.listar()
-        // Verifica que res es un arreglo antes de usar forEach
-        if (Array.isArray(res)) {
-            res.forEach(element => {
-                element.action =
-                    "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarCategoria'  href='#/editCategoria' data-idCategoria='" +
-                    element.id +
-                    "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarCategoria'href='#/delCategoria' data-idCategoria='" +
-                    element.id +
-                    "'><i class='fas fa-trash'></i></a></div>"
-            })
-        } else {
-            console.error('La respuesta no es un arreglo:', res)
-            return
-        }
-    } catch (error) {
-        console.error('Error al listar categorías:', error)
-        return
-    }
+    res = await categoriasServices.listar()
+    res.forEach(element => {
+        element.action =
+            "<div class='btn-group'><a class='btn btn-warning btn-sm mr-1 rounded-circle btnEditarCategoria'  href='#/editCategoria' data-idCategoria='" +
+            element.id +
+            "'> <i class='fas fa-pencil-alt'></i></a><a class='btn btn-danger btn-sm rounded-circle removeItem btnBorrarCategoria'href='#/delCategoria' data-idCategoria='" +
+            element.id +
+            "'><i class='fas fa-trash'></i></a></div>"
+    })
 
     cP.innerHTML = htmlCategorias
 
@@ -80,12 +69,12 @@ function enlazarEventos(oSettings) {
 }
 
 function agregar() {
-    newCategoria()
+    newRegister()
 }
 function editar() {
     let id = parseInt(this.getAttribute('data-idCategoria'), 10)
 
-    editCategoria(id)
+    editRegister(id)
 }
 
 async function borrar() {
@@ -99,6 +88,7 @@ async function borrar() {
 
         focusDeny: true,
     }).then(result => {
+        /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
             borrar = 1
         } else if (result.isDenied) {
@@ -124,7 +114,7 @@ function llenarTabla(res) {
             enlazarEventos(oSettings)
         },
         deferRender: true,
-        retrieve: true,
+        retrive: true,
         processing: true,
         language: {
             sProcessing: 'Procesando...',
