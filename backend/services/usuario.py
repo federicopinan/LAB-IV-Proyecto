@@ -39,3 +39,7 @@ class UsuarioServicio():
        self.db.query(UsuarioModel).filter(UsuarioModel.id == id).delete()
        self.db.commit()
        return
+   
+    #Query de ususarios registrados
+    def get_registered_users(self, db: Session):
+        return self.db.query(UsuarioModel).count()

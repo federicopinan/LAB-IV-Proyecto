@@ -53,8 +53,26 @@ def delete_book(id: int)-> dict:
     return {"message": "Se ha eliminado el libro"}
 
 #Listar todos los libros de una categoría específica.
-@libro_router.get("/booksbycategory/{id}",tags=["Libros📚"])
+@libro_router.get("/libros_por_categoria/{id}",tags=["Libros📚"])
 def get_Book_By_CategoryID(id:int)->dict:
     db=Session
     result = LibroServicio(db).get_libros_por_categoria(id)
+    return result
+
+@libro_router.get("/libros_por_titulo/",tags=["Libros📚"])
+def GetBookByTittle(titulo:str)->List[LibroSchema]:
+    db=Session()
+    result=LibroServicio(db).get_libros_by_titulo(titulo)
+    return result
+
+@libro_router.get("/libros_por_autor/",tags=["Libros📚"])
+def GetBookByAuthor(autor:str)->List[LibroSchema]:
+    db=Session()
+    result=LibroServicio(db).get_libros_by_autor(autor)
+    return result
+
+@libro_router.get("/libros_disponibles/",tags=["Libros📚"])
+def GetBookByDisponibles()->List[LibroSchema]:
+    db=Session()
+    result=LibroServicio(db).get_libros_disponibles()
     return result

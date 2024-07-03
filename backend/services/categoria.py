@@ -1,7 +1,9 @@
-from models.categoria import Categoria as categoryModel
-from schemas.categoria import Categoria as categorySchema
+from models.categoria import categoryModel as categoryModel
+from schemas.categoria import categoryModel as categorySchema
+from models.prestamo import Prestamo 
+from models.libro import Libro as booksmodel
 
-#! Funciones CRUD para los endpoints del router Categoria
+#! Funciones CRUD para los endpoints del router categoryModel
 class CategoriaServicio():
     def __init__(self,db) -> None:
         self.db=db
@@ -32,3 +34,14 @@ class CategoriaServicio():
         self.db.query(categoryModel).filter(categoryModel.id == id).delete()
         self.db.commit()
         return
+    
+    #Query para mostrar la categoria más popular
+    def get_categoria_mas_popular(db: Session):
+        return db.query(
+            categoria.nombre,
+            func.count(Prestamo.id).label("total")
+        ).join(booksmodel, categoryModel.id == booksmodel.categoria_id
+        ).join(Prestamo, booksmodel.id == Prestamo.libro_id
+        ).group_by(categoryModel.id
+        ).order_by(func.count(Prestamo.id).desc()
+        ).first()
