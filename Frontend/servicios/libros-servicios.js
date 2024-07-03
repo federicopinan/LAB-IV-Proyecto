@@ -68,9 +68,16 @@ async function borrar(id) {
     }).then(respuesta => respuesta.json())
 }
 
+async function listarPorCategoria(idCategoria) {
+    const newUrl = new URL(url + '/')
+    newUrl.searchParams.append('idCategoria', idCategoria)
+    return await fetch(newUrl).then(respuesta => respuesta.json())
+}
+
 export const librosServices = {
     listar,
     crear,
     editar,
     borrar,
+    listarPorCategoria,
 }

@@ -36,26 +36,26 @@ categoria_router = APIRouter()
 # def verify_password(plain_password: str, hashed_password: str) -> bool:
 #     return pwd_context.verify(plain_password, hashed_password)    
 
-@categoria_router.get('/categoria', tags=["Categorias🏷️"],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
+@categoria_router.get('/categorias', tags=["Categorias🏷️"],response_model=List[CategoriaSchema])#,dependencies=[Depends(JWTBearer())])
 def get_Category()-> List[CategoriaSchema]:
     db = Session()
     result = CategoriaServicio(db).get_categoria()
     return result
 
-@categoria_router.get('/categoria/{id}', tags=["Categorias🏷️"])
+@categoria_router.get('/categorias/{id}', tags=["Categorias🏷️"])
 def get_Category(id: int) -> CategoriaSchema:
     db = Session()
     result = CategoriaServicio(db).get_categorie(id)
     return result
 
 
-@categoria_router.post('/categoria', tags=["Categorias🏷️"], response_model=dict, status_code=201)
+@categoria_router.post('/categorias', tags=["Categorias🏷️"], response_model=dict, status_code=201)
 def create_category(cat: CategoriaSchema) -> dict:
     db = Session()
     CategoriaServicio(db).create_categorie(cat)
     return ({"Mensaje": "Se ha registrado la categoria "+cat.nombre})
 
-@categoria_router.put('/categoria/{id}',tags=["Categorias🏷️"])
+@categoria_router.put('/categorias/{id}',tags=["Categorias🏷️"])
 def update_category(id:int,cat:CategoriaSchema):
     db=Session()
     result=CategoriaServicio(db).get_categorie(id)
@@ -66,7 +66,7 @@ def update_category(id:int,cat:CategoriaSchema):
     return {"Mensaje":"Se ha modificado la categoria con el id "+str(id)}
 
 
-@categoria_router.delete('/categoria/{id}',tags=["Categorias🏷️"])
+@categoria_router.delete('/categorias/{id}',tags=["Categorias🏷️"])
 def delete_category(id: int)-> dict:
     db = Session()
     result: Categoria=db.query(Categoria).filter(Categoria.id == id).first()

@@ -1,6 +1,7 @@
 from models.libro import Libro as booksmodel
 from schemas.libro import Libro as booksSchema
 from models.prestamo import Prestamo 
+from config.database import Session
 import datetime
 #! Funciones CRUD para los endpoints del router libro
 class LibroServicio():

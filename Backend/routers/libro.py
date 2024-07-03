@@ -13,7 +13,7 @@ from middlewares.jwt_manager import JWTBearer
 
 libro_router = APIRouter()
 
-@libro_router.get('/libro', tags=["Libros📚"],response_model=List[LibroSchema])#,dependencies=[Depends(JWTBearer())])
+@libro_router.get('/libros/', tags=["Libros📚"],response_model=List[LibroSchema])#,dependencies=[Depends(JWTBearer())])
 def get_Books()-> List[LibroSchema]:
     db = Session()
     result = LibroServicio(db).get_books()
@@ -26,7 +26,7 @@ def get_Book(id: int) -> LibroSchema:
     return result
 
 
-@libro_router.post('/libros', tags=["Libros📚"], response_model=dict, status_code=201)
+@libro_router.post('/libros/', tags=["Libros📚"], response_model=dict, status_code=201)
 def create_book(libro: LibroSchema) -> dict:
     db = Session()
     LibroServicio(db).create_book(libro)

@@ -1,8 +1,8 @@
-from models.categoria import categoryModel as categoryModel
-from schemas.categoria import categoryModel as categorySchema
+from models.categoria import Categoria as categoryModel
+from schemas.categoria import Categoria as categorySchema
 from models.prestamo import Prestamo 
 from models.libro import Libro as booksmodel
-
+from config.database import Session
 #! Funciones CRUD para los endpoints del router categoryModel
 class CategoriaServicio():
     def __init__(self,db) -> None:

@@ -1,5 +1,5 @@
-// import {newRegister as newPrestamo} from './new.js'
-// import {editRegister as editPrestamo} from './new.js'
+import {newPrestamo} from './new.js'
+import {editPrestamo} from './new.js'
 import {prestamoServices} from '../../servicios/prestamos-servicios.js'
 
 const htmlPrestamos = `
@@ -37,7 +37,7 @@ export async function Prestamos() {
     d.querySelector('.contenidoTitulo').innerHTML = 'Prestamos'
     d.querySelector('.contenidoTituloSec').innerHTML = ''
     d.querySelector('.rutaMenu').innerHTML = 'Prestamos'
-    d.querySelector('.rutaMenu').setAttribute('href', '#/Prestamos')
+    d.querySelector('.rutaMenu').setAttribute('href', '#/prestamos')
     let cP = d.getElementById('contenidoPrincipal')
 
     res = await prestamoServices.listar()
@@ -94,7 +94,7 @@ async function borrar() {
         }
     })
     if (borrar === 1) await PrestamosServices.borrar(id)
-    window.location.href = '#/Prestamos'
+    window.location.href = '#/prestamos'
 }
 
 function llenarTabla(res) {
