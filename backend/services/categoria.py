@@ -17,6 +17,7 @@ class CategoriaServicio():
     def create_categorie(self,category:categorySchema):
         new_category = categoryModel(**category.dict())
         self.db.add(new_category)
+        # self.db.add(new_category)
         self.db.commit()
         return
 

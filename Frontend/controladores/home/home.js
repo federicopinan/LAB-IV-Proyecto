@@ -6,14 +6,14 @@ const htmlHome = ` <div class="row" >
         <!-- small box -->
         <div class="small-box bg-custom-success">
             <div class="inner">
-            <h3 id="indVentas">150</h3>
+            <h3 id="indLibros">150</h3>
 
             <p>Libros disponibles</p>
             </div>
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="#/ventas" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#/libros" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -28,7 +28,7 @@ const htmlHome = ` <div class="row" >
             <div class="icon">
             <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#/ventas" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#/prestamos" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -51,14 +51,14 @@ const htmlHome = ` <div class="row" >
         <!-- small box -->
         <div class="small-box bg-custom-success">
             <div class="inner">
-            <h3 id="indProductos">65</h3>
+            <h3 id="indLibros">65</h3>
 
             <p>Cantidad de libros</p>
             </div>
             <div class="icon">
             <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#/productos" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="#/libros" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -90,7 +90,7 @@ const htmlHome = ` <div class="row" >
 
 export async function Home() {
     let d = document
-    let res = ''
+    let res = ' '
     d.querySelector('.contenidoTitulo').innerHTML =
         'Sistema de gestion de libros📚'
     d.querySelector('.contenidoTituloSec').innerHTML = ''
@@ -100,24 +100,24 @@ export async function Home() {
 
     cP.innerHTML = htmlHome
 
-    let indVentas = d.getElementById('indVentas')
+    let indPrestamos = d.getElementById('indPrestamos')
     let indSinDespachar = d.getElementById('indSindespachar')
     let indUsuarios = d.getElementById('indUsuarios')
-    let indProductos = d.getElementById('indProductos')
+    let indLibros = d.getElementById('indLibros')
 
     res = await usuariosServicio.listar()
     //CANTIDAD DE USUARIOS
     indUsuarios.innerHTML = res.length
 
-    //CANTIDAD DE VENTAS
+    //CANTIDAD DE Prestamos
     res = await librosServices.listar()
-    indVentas.innerHTML = res.length
+    indPrestamos.innerHTML = res.length
 
-    //CANTIDAD DE VENTAS SIN DESPACHAR (los valores que espera para el campo despachado son true y false)
-    res = await librosServices.listarVentasDespachadas(false)
+    //CANTIDAD DE Prestamos SIN DESPACHAR (los valores que espera para el campo despachado son true y false)
+    res = await librosServices.listarPrestamosDespachadas(false)
     indSinDespachar.innerHTML = res.length
 
-    //CANTIDAD DE PRODUCTOS
+    //CANTIDAD DE Libros
     res = await prestamoServices.listar()
-    indProductos.innerHTML = res.length
+    indLibros.innerHTML = res.length
 }
