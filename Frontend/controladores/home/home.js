@@ -6,7 +6,7 @@ const htmlHome = ` <div class="row" >
         <!-- small box -->
         <div class="small-box bg-custom-success">
             <div class="inner">
-            <h3 id="indLibros">150</h3>
+            <h3 id="indLibrosDisponibles">150</h3>
 
             <p>Libros disponibles</p>
             </div>
@@ -21,7 +21,7 @@ const htmlHome = ` <div class="row" >
         <!-- small box -->
         <div class="small-box bg-custom-success">
             <div class="inner">
-            <h3 id="indSindespachar">53</h3>
+            <h3 id="indPrestamos">53</h3>
 
             <p>Prestamos</p>
             </div>
@@ -100,8 +100,8 @@ export async function Home() {
 
     cP.innerHTML = htmlHome
 
+    let indLibrosDisponibles = d.getElementById('indLibrosDisponibles')
     let indPrestamos = d.getElementById('indPrestamos')
-    let indSinDespachar = d.getElementById('indSindespachar')
     let indUsuarios = d.getElementById('indUsuarios')
     let indLibros = d.getElementById('indLibros')
 
@@ -111,13 +111,13 @@ export async function Home() {
 
     //CANTIDAD DE Prestamos
     res = await librosServices.listar()
-    indPrestamos.innerHTML = res.length
+    indLibros.innerHTML = res.length
 
     //CANTIDAD DE Prestamos SIN DESPACHAR (los valores que espera para el campo despachado son true y false)
-    res = await librosServices.listarPrestamosDespachadas(false)
-    indSinDespachar.innerHTML = res.length
+    res = await librosServices.listarLibrosDisponibles(false)
+    indLibrosDisponibles.innerHTML = res.length
 
     //CANTIDAD DE Libros
     res = await prestamoServices.listar()
-    indLibros.innerHTML = res.length
+    indPrestamos.innerHTML = res.length
 }

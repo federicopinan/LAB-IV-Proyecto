@@ -1,6 +1,6 @@
 from models.prestamo import Prestamo as loanModel
 from schemas.prestamo import Prestamo as  loanSchema
-
+import datetime
 #! Funciones CRUD para los endpoints del router Prestamo
 class PrestamoServicio():
     def __init__(self,db) -> None:
@@ -35,9 +35,19 @@ class PrestamoServicio():
         return
     
     #Obtener Prestamos activos de un usuario por id de usuario
-    def get_prestamos_activos(self, id: int):
-        return self.db.query(loanModel).filter(loanModel.usuario_id == id, loanModel.fecha_devolucion == None,loanModel.fecha_prestamo != None).all()
-    
+    def get_prestamo_activos(self, usuario_id: int):
+        now = datetime.now()
+        result = self.db.query(loanModel).filter(loanModel.usuario_id == usuario_id, loanModel.fecha_devolucion >= now).all()
+        return result
+
+    def is_libro_disponible(self, libro_id: int, fecha_prestamo: date, fecha_devolucion: date):
+        existing_prestamos = self.db.query(loanModel).filter(
+            loanModel.libro_id == libro_id,
+            loanModel.fecha_prestamo < fecha_devolucion,
+            loanModel.fecha_devolucion > fecha_prestamo
+        ).all()
+        return len(existing_prestamos) == 0 # si existe el libro o no
+
     #Obtener el historial de préstamos de un usuario por id de usuario
     def get_historial_prestamos(self, usuario_id: int):
         return self.db.query(loanModel).filter(loanModel.usuario_id == usuario_id).all()

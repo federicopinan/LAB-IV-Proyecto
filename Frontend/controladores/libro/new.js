@@ -10,7 +10,7 @@ const htmlAmLibros = `
 			<div class="col-md-8 offset-md-2">	
                
 				<!--=====================================
-                a
+                Titulo
                 ======================================-->
 				
 				<div class="form-group mt-5">
@@ -32,12 +32,12 @@ const htmlAmLibros = `
 				</div>
 
 				<!--=====================================
-                a
+                Autor
                 ======================================-->
 
 				<div class="form-group mt-2">
 					
-					<label>a</label>
+					<label>Autor</label>
 
 					<input 
 					type="text" 
