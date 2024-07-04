@@ -2,162 +2,56 @@ import {librosServices} from '../../servicios/libros-servicios.js'
 
 const htmlAmLibros = `
 <div class="card card-dark card-outline">
-	
-	<form  class="needs-validation frmAmLibro"  enctype="multipart/form-data">
-	
+	<form class="needs-validation frmAmLibro" enctype="multipart/form-data">
 		<div class="card-header">
-               
-			<div class="col-md-8 offset-md-2">	
-               
-				<!--=====================================
-                Titulo
-                ======================================-->
-				
-				<div class="form-group mt-5">
-					
-					<label>Titulo</label>
-
-					<input 
-					type="text" 
-					class="form-control"
-					pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9 ]{1,}"
-					onchange="validateJS(event,'text')"
-					name="titulo"
-                    id="libroTitulo"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Autor
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Autor</label>
-
-					<input 
-					type="text" 
-					class="form-control"
-					onchange="validateJS(event,'text')"
-					name="autor"
-                    id="libroAutor"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Isbn
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Isbn</label>
-
-					<input 
-					type="number" 
-					class="form-control"
-					onchange="validateJS(event,'text')"
-					name="isbn"
-                    id="libroIsbn"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Editorial
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Editorial</label>
-
-					<input 
-					type="text" 
-					class="form-control"
-					onchange="validateJS(event,'text')"
-					name="editorial"
-                    id="libroEditorial"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Disponible
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Disponible</label>
-
-					<input 
-					type="number" 
-					class="form-control"
-					onchange="validateJS(event,'text')"
-					name="disponible"
-                    id="libroDisponible"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-
-				<!--=====================================
-                Categoria ID
-                ======================================-->
-
-				<div class="form-group mt-2">
-					
-					<label>Categoria ID</label>
-
-					<input 
-					type="number" 
-					class="form-control"
-					onchange="validateJS(event,'text')"
-					name="categoria_id"
-                    id="libroCategoria_id"
-					required>
-
-					<div class="valid-feedback">Valid.</div>
-            		<div class="invalid-feedback">Please fill out this field.</div>
-
-				</div>
-			
-			</div>
-		
-		</div>
-
-		<div class="card-footer">
-			
 			<div class="col-md-8 offset-md-2">
-	
-				<div class="form-group mt-3">
-
-					<a href="#/libros" class="btn btn-light border text-left">Cancelar</a>
-					
-					<button type="submit" class="btn bg-dark float-right">Guardar</button>
-
+				<div class="form-group mt-5">
+					<label>Titulo</label>
+					<input type="text" class="form-control" pattern="[A-Za-zñÑáéíóúÁÉÍÓÚ0-9 ]{1,}" name="titulo" id="libroTitulo" required>
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">Please fill out this field.</div>
 				</div>
-
+				<div class="form-group mt-2">
+					<label>Autor</label>
+					<input type="text" class="form-control" name="autor" id="libroAutor" required>
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">Please fill out this field.</div>
+				</div>
+				<div class="form-group mt-2">
+					<label>Isbn</label>
+					<input type="text" class="form-control" name="isbn" id="libroIsbn" required>
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">El ISBN debe tener exactamente 13 dígitos.</div>
+				</div>
+				<div class="form-group mt-2">
+					<label>Editorial</label>
+					<input type="text" class="form-control" name="editorial" id="libroEditorial" required>
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">Please fill out this field.</div>
+				</div>
+				<div class="form-group mt-2">
+					<label>Categoria_id</label>
+					<input type="number" class="form-control" name="categoria_id" id="libroCategoria_id" required>
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">Please fill out this field.</div>
+				</div>
+				<div class="form-group mt-2">
+					<label>Disponible</label>
+					<input type="checkbox" class="form-control" name="disponible" id="libroDisponible">
+					<div class="valid-feedback">Valid.</div>
+					<div class="invalid-feedback">Please fill out this field.</div>
+				</div>
 			</div>
-
 		</div>
-
+		<div class="card-footer">
+			<div class="col-md-8 offset-md-2">
+				<div class="form-group mt-3">
+					<a href="#/libros" class="btn btn-light border text-left">Cancelar</a>
+					<button type="submit" class="btn bg-dark float-right">Guardar</button>
+				</div>
+			</div>
+		</div>
 	</form>
-
 </div> `
 
 var formulario = ''
@@ -165,9 +59,9 @@ var txtTitulo = ''
 var txtAutor = ''
 var txtIsbn = ''
 var txtEditorial = ''
-var txtDisponble = ''
+var txtDisponible = ''
 var txtCategoria_id = ''
-let Id_libro = 0
+let libroId = 0
 
 export async function newLibro() {
     let d = document
@@ -179,24 +73,26 @@ export async function newLibro() {
 
     formulario = d.querySelector('.frmAmLibro')
     formulario.addEventListener('submit', guardar)
+    d.getElementById('libroIsbn').addEventListener('change', validateISBN) // Añadir el evento de cambio
 }
 
 export async function editLibro(id) {
     let d = document
-    Id_libro = id
+    libroId = id
     d.querySelector('.contenidoTitulo').innerHTML = 'Editar Libro'
     d.querySelector('.contenidoTituloSec').innerHTML += 'Editar'
     crearFormulario()
 
     formulario = d.querySelector('.frmAmLibro')
     formulario.addEventListener('submit', modificar)
+    d.getElementById('libroIsbn').addEventListener('change', validateISBN) // Añadir el evento de cambio
     let libro = await librosServices.listar(id)
 
     txtTitulo.value = libro.titulo
     txtAutor.value = libro.autor
     txtIsbn.value = libro.isbn
     txtEditorial.value = libro.editorial
-    txtDisponble.value = libro.disponible
+    txtDisponible.checked = libro.disponible
     txtCategoria_id.value = libro.categoria_id
 }
 
@@ -210,58 +106,100 @@ function crearFormulario() {
 
     var script = document.createElement('script')
     script.type = 'text/javascript'
-    script.src = '/Frontend/controladores/validaciones.js'
+    script.src = '../controladores/validaciones.js'
     cP.appendChild(script)
 
     txtTitulo = d.getElementById('libroTitulo')
     txtAutor = d.getElementById('libroAutor')
     txtIsbn = d.getElementById('libroIsbn')
     txtEditorial = d.getElementById('libroEditorial')
-    txtDisponble = d.getElementById('libroDisponible')
+    txtDisponible = d.getElementById('libroDisponible')
     txtCategoria_id = d.getElementById('libroCategoria_id')
 }
 
-function guardar(e) {
+function validateISBN(event) {
+    const input = event.target
+    const isbn = input.value
+    if (!/^\d{13}$/.test(isbn)) {
+        input.setCustomValidity('El ISBN debe tener exactamente 13 dígitos.')
+    } else {
+        input.setCustomValidity('')
+    }
+    input.reportValidity()
+}
+
+async function guardar(e) {
     e.preventDefault()
     const formData = new FormData(e?.target)
-    const values = Object.fromEntries(formData)
-    console.log(values)
+    const values = Object.fromEntries(formData.entries())
+    values.prestado = formData.has('prestado') // Convertir el valor del checkbox a booleano
+    console.log('Datos enviados:', values) // Verificar los datos enviados
 
-    // No incluir 'id' en la solicitud de creación
     librosServices
         .crear(
             values.titulo,
             values.autor,
-            values.disponible,
             values.isbn,
             values.editorial,
+            values.disponible,
             values.categoria_id
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/libros'
+            Swal.fire({
+                title: 'Libro guardado',
+                text: 'El libro se ha guardado exitosamente.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            }).then(() => {
+                window.location.href = '#/libros'
+            })
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            console.log(error)
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al guardar el libro.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            })
+        })
 }
 
-function modificar(e) {
+async function modificar(e) {
     e.preventDefault()
     const formData = new FormData(e?.target)
-    const values = Object.fromEntries(formData)
+    const values = Object.fromEntries(formData.entries())
+    values.prestado = formData.has('prestado') // Convertir el valor del checkbox a booleano
 
     librosServices
         .editar(
-            Id_libro,
+            libroId,
             values.titulo,
             values.autor,
-            values.disponible,
             values.isbn,
             values.editorial,
+            values.disponible,
             values.categoria_id
         )
         .then(respuesta => {
             formulario.reset()
-            window.location.href = '#/libros'
+            Swal.fire({
+                title: 'Libro actualizado',
+                text: 'El libro se ha actualizado exitosamente.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+            }).then(() => {
+                window.location.href = '#/libros'
+            })
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            console.log(error)
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al actualizar el libro.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+            })
+        })
 }

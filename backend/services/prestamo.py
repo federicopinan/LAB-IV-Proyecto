@@ -1,6 +1,6 @@
 from models.prestamo import Prestamo as loanModel
 from schemas.prestamo import Prestamo as  loanSchema
-import datetime
+from datetime import datetime, date 
 #! Funciones CRUD para los endpoints del router Prestamo
 class PrestamoServicio():
     def __init__(self,db) -> None:

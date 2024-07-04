@@ -101,9 +101,9 @@ export async function Home() {
     cP.innerHTML = htmlHome
 
     let indLibrosDisponibles = d.getElementById('indLibrosDisponibles')
-    let indPrestamos = d.getElementById('indPrestamos')
     let indUsuarios = d.getElementById('indUsuarios')
     let indLibros = d.getElementById('indLibros')
+    let indPrestamos = d.getElementById('indPrestamos')
 
     res = await usuariosServicio.listar()
     //CANTIDAD DE USUARIOS

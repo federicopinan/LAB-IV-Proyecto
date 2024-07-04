@@ -13,7 +13,7 @@ async function listar(id) {
     }).then(respuesta => respuesta.json())
 }
 
-async function crear(titulo, autor, isbn, editorial, disponible, categoria_id) {
+async function crear(titulo, autor, isbn, editorial, prestado, categoria_id) {
     return await fetch(url, {
         method: 'POST',
         headers: {
@@ -25,7 +25,7 @@ async function crear(titulo, autor, isbn, editorial, disponible, categoria_id) {
             autor: autor,
             isbn: isbn,
             editorial: editorial,
-            disponible: disponible,
+            prestado: prestado,
             categoria_id: categoria_id,
         }),
     }).then(respuesta => respuesta.json())
@@ -37,7 +37,7 @@ async function editar(
     autor,
     isbn,
     editorial,
-    disponible,
+    prestado,
     categoria_id
 ) {
     let urlPut = url + '/' + id
@@ -52,7 +52,7 @@ async function editar(
             autor: autor,
             isbn: isbn,
             editorial: editorial,
-            disponible: disponible,
+            prestado: prestado,
             categoria_id: categoria_id,
         }),
     }).then(respuesta => respuesta.json())

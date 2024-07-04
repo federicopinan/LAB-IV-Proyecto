@@ -16,7 +16,7 @@ const htmlAmLibros = `
 
    <!-- /.card-header -->
    <div class="card-body">            
-   <table id="librosTable" class="table table-bordered table-striped tableVehiculo" width="100%">
+   <table id="librosTable" class="table table-bordered table-striped tableLibros" width="100%">
        <thead>
            <tr>
            <th># </th>
