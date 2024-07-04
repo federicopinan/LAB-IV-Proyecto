@@ -55,7 +55,7 @@ def delete_loan(id: int)-> dict:
 @prestamo_router.get("/prestamos/prestamosactivos/{id}",tags=["Prestamos📂"])
 def Get_Active_Loans_ByUser(id:int) ->PrestamoSchema:
     db = Session()
-    result = PrestamoServicio(db).get_prestamos_activost(id)
+    result = PrestamoServicio(db).get_prestamos_activos(id)
     return result
 
 #Obtener el historial de préstamos de un usuario
@@ -66,4 +66,8 @@ def Get_LoanHistory_ByUser(id:int) ->PrestamoSchema:
     return result
 
             
-                     
+@prestamo_router.get("/prestamos/totalprestamosactivos", tags=["Prestamos📂"], response_model=int, status_code=200, dependencies=[Depends(JWTBearer())])
+def Get_TotalActiveLoans() -> int:
+    db=Session()
+    result = PrestamoServicio(db).get_Total_prestamos_activos()
+    return result 

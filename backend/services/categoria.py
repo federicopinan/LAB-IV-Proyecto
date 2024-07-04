@@ -36,12 +36,11 @@ class CategoriaServicio():
         return
     
     #Query para mostrar la categoria más popular
-    def get_categoria_mas_popular(db: Session):
-        return db.query(
-            categoria.nombre,
-            func.count(Prestamo.id).label("total")
+    def get_categoria_mas_popular(self):
+        return self.db.query(
+            categoryModel.nombre,function.count(Prestamo.id).label("total")
         ).join(booksmodel, categoryModel.id == booksmodel.categoria_id
         ).join(Prestamo, booksmodel.id == Prestamo.libro_id
         ).group_by(categoryModel.id
-        ).order_by(func.count(Prestamo.id).desc()
+        ).order_by(function.count(Prestamo.id).desc()
         ).first()
