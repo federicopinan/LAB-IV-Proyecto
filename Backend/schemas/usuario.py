@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, field_validator, SecretStr, ConfigDict
+from pydantic import BaseModel, Field, EmailStr, field_validator, SecretStr, ConfigDict,PositiveInt
 from fastapi import status
 from typing import Optional, List
 from fastapi.exceptions import HTTPException
@@ -18,7 +18,7 @@ class UsuarioAuth(BaseModel):
 
 
 class Usuario(BaseModel):
-    id: Optional[int] = None
+    id: Optional[PositiveInt] = None
     nombre:str = Field(min_length=2, max_length=50)
     email: EmailStr
     password: SecretStr = Field(min_length=8)

@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field,PositiveInt
 from datetime import datetime
 
 #! Creamos el esquema de Prestamo
 class Prestamo(BaseModel):
-    id: int|None=None
-    libro_id: int
-    usuario_id: int
+    id: PositiveInt|None=None
+    libro_id: PositiveInt
+    usuario_id: PositiveInt
     fecha_prestamo: datetime
     fecha_devolucion: datetime = None
 

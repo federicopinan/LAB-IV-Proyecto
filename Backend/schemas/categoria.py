@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field,PositiveInt
 
 #! Creamos el esquema de Categoría
 class Categoria(BaseModel):
-    id: int|None=None
+    id: PositiveInt|None=None
     nombre: str = Field( min_length=1, max_length=50)
     descripcion: str = Field(None, max_length=255)
 
